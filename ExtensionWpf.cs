@@ -18,7 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Gabriel.Cat;
 using System.Linq;
-namespace Gabriel.Cat.Utilitats.Wpf
+namespace Gabriel.Cat.Extension
 {
 	public static class ExtensionWpf
 	{
@@ -28,7 +28,7 @@ namespace Gabriel.Cat.Utilitats.Wpf
         //    return dtp.Value.Date;
         //}
         #endregion
-        public static int ToArgb(this Color color)
+      /*  public static int ToArgb(this Color color)
 		{
 			byte[] argb =  {
 				color.A,
@@ -37,7 +37,7 @@ namespace Gabriel.Cat.Utilitats.Wpf
 				color.B
 			};
 			return Serializar.ToInt(argb);
-		}
+		}*///cuando lo arregle lo pondre de nuevo :)
 
         public static Color Invertir(this Color color)
         {
