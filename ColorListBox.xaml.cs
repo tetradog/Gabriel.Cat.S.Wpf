@@ -288,6 +288,14 @@ namespace Gabriel.Cat.Wpf
             };
             Dispatcher.BeginInvoke(act);
         }
+        public void Remove(Color elementsWithColor)
+        {
+            List<Object> elementosConEseColor = new List<object>();
+            for (int i = 0; i < stkPanel.Children.Count; i++)
+                if (((ItemColorList)stkPanel.Children[i]).Color.Equals(elementsWithColor))
+                    elementosConEseColor.Add(((ItemColorList)stkPanel.Children[i]).Object);
+            Remove(elementosConEseColor);
+        }
         //poder hacer insertAt(int posicion)
         public void Clear()
         {
