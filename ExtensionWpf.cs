@@ -28,7 +28,7 @@ namespace Gabriel.Cat.Extension
         //    return dtp.Value.Date;
         //}
         #endregion
-      /*  public static int ToArgb(this Color color)
+        public static int ToArgb(this Color color)
 		{
 			byte[] argb =  {
 				color.A,
@@ -37,7 +37,7 @@ namespace Gabriel.Cat.Extension
 				color.B
 			};
 			return Serializar.ToInt(argb);
-		}*///cuando lo arregle lo pondre de nuevo :)
+		}
 
         public static Color Invertir(this Color color)
         {

@@ -288,13 +288,18 @@ namespace Gabriel.Cat.Wpf
             };
             Dispatcher.BeginInvoke(act);
         }
-        public void Remove(Color elementsWithColor)
+        public void Remove(Color elementsWithColorBackGround)
         {
-            List<Object> elementosConEseColor = new List<object>();
+            Remove(GetElementsWithBackGroundColor(elementsWithColorBackGround));
+        }
+
+        public Object[] GetElementsWithBackGroundColor(Color elementsWithColorBackGround)
+        {
+            Llista<Object> objectsWithColor = new Llista<object>();
             for (int i = 0; i < stkPanel.Children.Count; i++)
-                if (((ItemColorList)stkPanel.Children[i]).Color.Equals(elementsWithColor))
-                    elementosConEseColor.Add(((ItemColorList)stkPanel.Children[i]).Object);
-            Remove(elementosConEseColor);
+                if (((ItemColorList)stkPanel.Children[i]).ColorBackGround.Equals(elementsWithColorBackGround))
+                    objectsWithColor.Afegir(((ItemColorList)stkPanel.Children[i]).Object);
+            return objectsWithColor.ToArray();
         }
         //poder hacer insertAt(int posicion)
         public void Clear()
@@ -567,7 +572,7 @@ namespace Gabriel.Cat.Wpf
                     this.Background = new SolidColorBrush(color);
                 }
                 //si el color es claro se ponen letras oscuras sino blancas
-                if (((SolidColorBrush)this.Background).Color.EsClaro())
+                if (ColorBackGround.EsClaro())
                 {
                     txtTexto.Foreground = new SolidColorBrush(Colors.Black);
                 }
@@ -579,7 +584,10 @@ namespace Gabriel.Cat.Wpf
             };
             Dispatcher.BeginInvoke(act);
         }
-
+        public Color ColorBackGround
+        {
+            get { return ((SolidColorBrush)this.Background).Color; }
+        }
 
         public int CompareTo(object obj)
         {
