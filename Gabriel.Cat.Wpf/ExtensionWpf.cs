@@ -18,6 +18,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Gabriel.Cat;
 using System.Linq;
+using System.Drawing;
+using System.Runtime.InteropServices;
+
 namespace Gabriel.Cat.Extension
 {
 	public static class ExtensionWpf
@@ -28,7 +31,23 @@ namespace Gabriel.Cat.Extension
         //    return dtp.Value.Date;
         //}
         #endregion
-        public static int ToArgb(this Color color)
+        public static Bitmap ToBitmap(this System.Windows.Controls.Image img)
+        {
+            return img.Source.ToBitmap();
+        }
+        public static Bitmap ToBitmap(this ImageSource imgSource)
+        {
+            BitmapSource bitmapSource = (BitmapSource)imgSource;
+            int width = bitmapSource.PixelWidth;
+            int height = bitmapSource.PixelHeight;
+            int stride = width * ((bitmapSource.Format.BitsPerPixel + 7) / 8);
+            Bitmap bitmap;
+            IntPtr memoryBlockPointer = Marshal.AllocHGlobal(height * stride);
+            bitmapSource.CopyPixels(new Int32Rect(0, 0, width, height), memoryBlockPointer, height * stride, stride);
+            bitmap = new Bitmap(width, height, stride, System.Drawing.Imaging.PixelFormat.Format32bppPArgb, memoryBlockPointer);
+            return bitmap;
+        }
+        public static int ToArgb(this System.Windows.Media.Color color)
 		{
 			byte[] argb =  {
 				color.A,
@@ -39,11 +58,11 @@ namespace Gabriel.Cat.Extension
 			return Serializar.ToInt(argb);
 		}
 
-        public static Color Invertir(this Color color)
+        public static System.Windows.Media.Color Invertir(this System.Windows.Media.Color color)
         {
-            return Color.FromArgb((byte)Math.Abs((int)color.A-255),(byte) Math.Abs((int)color.R - 255),(byte) Math.Abs((int)color.G - 255),(byte) Math.Abs((int)color.B - 255));
+            return System.Windows.Media.Color.FromArgb((byte)Math.Abs((int)color.A-255),(byte) Math.Abs((int)color.R - 255),(byte) Math.Abs((int)color.G - 255),(byte) Math.Abs((int)color.B - 255));
         }
-        public static bool EsClaro(this Color color)
+        public static bool EsClaro(this System.Windows.Media.Color color)
         {
             return (color.R+color.G+color.B) / 3 > 255 / 2;
         }
@@ -57,7 +76,7 @@ namespace Gabriel.Cat.Extension
             }
             return altura;
         }
-        public static void SetImage(this Image img, Uri path)
+        public static void SetImage(this System.Windows.Controls.Image img, Uri path)
         {
             BitmapImage imgCargada = new BitmapImage();
             imgCargada.BeginInit();
@@ -65,7 +84,7 @@ namespace Gabriel.Cat.Extension
             imgCargada.EndInit();
             img.Source = imgCargada;
         }
-        public static void SetImage(this Image img, System.Drawing.Bitmap bmp)
+        public static void SetImage(this System.Windows.Controls.Image img, System.Drawing.Bitmap bmp)
         {
             BitmapImage imgCargada = new BitmapImage();
             imgCargada.SetImage(bmp);
