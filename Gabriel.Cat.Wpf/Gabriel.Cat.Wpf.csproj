@@ -31,9 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gabriel.Cat.Utilitats, Version=1.0.5852.41673, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Gabriel.Cat.Utilitats, Version=1.0.5856.42884, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Gabriel.Cat.Utilitat\bin\Release\Gabriel.Cat.Utilitats.dll</HintPath>
+      <HintPath>..\..\Gabriel.Cat.Utilitats\Gabriel.Cat.Utilitats\bin\Debug\Gabriel.Cat.Utilitats.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
