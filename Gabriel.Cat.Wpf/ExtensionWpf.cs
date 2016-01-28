@@ -60,7 +60,7 @@ namespace Gabriel.Cat.Extension
 
         public static System.Windows.Media.Color Invertir(this System.Windows.Media.Color color)
         {
-            return System.Windows.Media.Color.FromArgb((byte)Math.Abs((int)color.A-255),(byte) Math.Abs((int)color.R - 255),(byte) Math.Abs((int)color.G - 255),(byte) Math.Abs((int)color.B - 255));
+            return System.Windows.Media.Color.FromArgb((byte)Math.Abs((int)color.A-255),(byte) System.Math.Abs((int)color.R - 255),(byte) System.Math.Abs((int)color.G - 255),(byte) System.Math.Abs((int)color.B - 255));
         }
         public static bool EsClaro(this System.Windows.Media.Color color)
         {
