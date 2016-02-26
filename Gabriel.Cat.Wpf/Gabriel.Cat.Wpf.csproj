@@ -69,10 +69,17 @@
       <DependentUpon>ColorListBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExtensionWpf.cs" />
+    <Compile Include="ObjViewer.xaml.cs">
+      <DependentUpon>ObjViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="ColorListBox.xaml" />
+    <Page Include="ObjViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

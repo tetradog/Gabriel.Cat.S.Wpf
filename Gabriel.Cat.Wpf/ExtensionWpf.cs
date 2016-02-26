@@ -20,11 +20,31 @@ using Gabriel.Cat;
 using System.Linq;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using Gabriel.Cat.Wpf;
+using System.Collections;
 
 namespace Gabriel.Cat.Extension
 {
 	public static class ExtensionWpf
 	{
+        #region ObjViewer
+        public static ObjViewer[] ToObjViewerArray(this IEnumerable list,ObjViewerEventHandler metodoClic)
+        {
+            List<ObjViewer> objViewerList= new List<ObjViewer>();
+            foreach(Object obj in list)
+            {
+                objViewerList.Add(obj.ToObjViewer(metodoClic));
+            }
+            return objViewerList.ToArray();
+        }
+        public static ObjViewer ToObjViewer(this Object obj, ObjViewerEventHandler metodoClic)
+        {
+          
+            ObjViewer objViewer=new ObjViewer(obj);
+            objViewer.ObjSelected += metodoClic;
+            return objViewer;
+        }
+        #endregion
         #region DateTimePicker
         //public static DateTime ToDateTime(this DateTimePicker dtp)
         //{
