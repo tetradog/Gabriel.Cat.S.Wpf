@@ -27,6 +27,13 @@ namespace Gabriel.Cat.Extension
 {
 	public static class ExtensionWpf
 	{
+        #region ItemCollection
+        public static void AddRange(this ItemCollection items,IEnumerable list)
+        {
+            foreach (object obj in list)
+                items.Add(obj);
+        }
+        #endregion
         #region ObjViewer
         public static ObjViewer[] ToObjViewerArray(this IEnumerable list,ObjViewerEventHandler metodoClic)
         {
