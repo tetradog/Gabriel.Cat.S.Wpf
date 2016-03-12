@@ -206,7 +206,7 @@ namespace Gabriel.Cat.Extension
             stream.Close();
             return textRtf;
         }
-        public static void LoadRtf(this RichTextBox rt,string stringInRtfFormat)
+        public static void LoadStringRtf(this RichTextBox rt,string stringInRtfFormat)
         {
             MemoryStream stream = new MemoryStream(ASCIIEncoding.Default.GetBytes(stringInRtfFormat));
             rt.Selection.Load(stream, DataFormats.Rtf);

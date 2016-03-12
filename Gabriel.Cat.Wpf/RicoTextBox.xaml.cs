@@ -24,14 +24,12 @@ namespace Gabriel.Cat.Wpf
     public partial class RicoTextBox : UserControl
     {
         public event TextChangedEventHandler TextoCambiado;
-        Tiket<TextChangedEventArgs> eventoTextoCambiado;
         public RicoTextBox()
         {
             InitializeComponent();
             imgCopiar.SetImage(Resource1.copiar);
             imgPegar.SetImage(Resource1.pegar);
             imgCortar.SetImage(Resource1.cortar);
-            eventoTextoCambiado = new Tiket<TextChangedEventArgs>(()=> { });
         }
         public string Text
         {
@@ -55,23 +53,15 @@ namespace Gabriel.Cat.Wpf
                 return rtText.ToStringRtf();
             }
             set
-            {
-                rtText.LoadRtf(value);
+            {//no se porque le aparece enters
+                rtText.LoadStringRtf(value);
             }
         }
 
         private void rtText_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-            eventoTextoCambiado.AbortaTrabajo();
-            eventoTextoCambiado = new Tiket<TextChangedEventArgs>((o) =>
-            {
-                Thread.Sleep(1000);//espero un segundo
                 if (TextoCambiado != null)
                     TextoCambiado(sender, e);
-            }, null);
-            eventoTextoCambiado.HazFaenaAsync();
-
         }
     }
 }
