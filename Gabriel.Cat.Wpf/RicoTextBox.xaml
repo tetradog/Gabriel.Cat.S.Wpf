@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Gabriel.Cat.Wpf.RicoTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gabriel.Cat.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <RichTextBox x:Name="rtText" TextChanged="rtText_TextChanged" >
+        <RichTextBox.ContextMenu>
+            <ContextMenu Background="White">
+                <MenuItem Header="Cortar">
+                    <MenuItem.Icon>
+                        <Image x:Name="imgCortar"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Copiar" >
+                    <MenuItem.Icon>
+                        <Image x:Name="imgCopiar"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Pegar" >
+                    <MenuItem.Icon>
+                        <Image x:Name="imgPegar"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Tamaño" >
+                    <MenuItem Header="1" Background="White"/>
+                </MenuItem>
+                <MenuItem Header="Tipo" >
+                    <MenuItem Header="Arial" Background="White"/>
+                </MenuItem>
+                <MenuItem Header="Alineamiento" >
+                    <MenuItem Header="Izquierda" Background="White"/>
+                </MenuItem>
+                <MenuItem Header="Color" >
+                    <MenuItem Header="Verde" Foreground="Green" Background="White"/>
+                </MenuItem>
+            </ContextMenu>
+        </RichTextBox.ContextMenu>
+    </RichTextBox>
+</UserControl>
