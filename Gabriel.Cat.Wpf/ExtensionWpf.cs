@@ -22,23 +22,26 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using Gabriel.Cat.Wpf;
 using System.Collections;
-
+using System.Xml;
+using System.Windows.Markup;
+using System.IO;
+using Gabriel.Cat.Extension;
 namespace Gabriel.Cat.Extension
 {
-	public static class ExtensionWpf
-	{
+    public static class ExtensionWpf
+    {
         #region ItemCollection
-        public static void AddRange(this ItemCollection items,IEnumerable list)
+        public static void AddRange(this ItemCollection items, IEnumerable list)
         {
             foreach (object obj in list)
                 items.Add(obj);
         }
         #endregion
         #region ObjViewer
-        public static ObjViewer[] ToObjViewerArray(this IEnumerable list,ObjViewerEventHandler metodoClic)
+        public static ObjViewer[] ToObjViewerArray(this IEnumerable list, ObjViewerEventHandler metodoClic)
         {
-            List<ObjViewer> objViewerList= new List<ObjViewer>();
-            foreach(Object obj in list)
+            List<ObjViewer> objViewerList = new List<ObjViewer>();
+            foreach (Object obj in list)
             {
                 objViewerList.Add(obj.ToObjViewer(metodoClic));
             }
@@ -46,8 +49,8 @@ namespace Gabriel.Cat.Extension
         }
         public static ObjViewer ToObjViewer(this Object obj, ObjViewerEventHandler metodoClic)
         {
-          
-            ObjViewer objViewer=new ObjViewer(obj);
+
+            ObjViewer objViewer = new ObjViewer(obj);
             objViewer.ObjSelected += metodoClic;
             return objViewer;
         }
@@ -75,23 +78,23 @@ namespace Gabriel.Cat.Extension
             return bitmap;
         }
         public static int ToArgb(this System.Windows.Media.Color color)
-		{
-			byte[] argb =  {
-				color.A,
-				color.R,
-				color.G,
-				color.B
-			};
-			return Serializar.ToInt(argb);
-		}
+        {
+            byte[] argb =  {
+                color.A,
+                color.R,
+                color.G,
+                color.B
+            };
+            return Serializar.ToInt(argb);
+        }
 
         public static System.Windows.Media.Color Invertir(this System.Windows.Media.Color color)
         {
-            return System.Windows.Media.Color.FromArgb((byte)Math.Abs((int)color.A-255),(byte) System.Math.Abs((int)color.R - 255),(byte) System.Math.Abs((int)color.G - 255),(byte) System.Math.Abs((int)color.B - 255));
+            return System.Windows.Media.Color.FromArgb((byte)Math.Abs((int)color.A - 255), (byte)System.Math.Abs((int)color.R - 255), (byte)System.Math.Abs((int)color.G - 255), (byte)System.Math.Abs((int)color.B - 255));
         }
         public static bool EsClaro(this System.Windows.Media.Color color)
         {
-            return (color.R+color.G+color.B) / 3 > 255 / 2;
+            return (color.R + color.G + color.B) / 3 > 255 / 2;
         }
 
         public static double HeightItem(this StackPanel stkPanel, UIElement item)
@@ -135,10 +138,10 @@ namespace Gabriel.Cat.Extension
         }
         public static void Sort(this UIElementCollection coleccion)
         {
-                List<UIElement> items =new List<UIElement>(coleccion.OfType<UIElement>());
-                items.Sort();
-                for (int i = 0; i < items.Count; i++)
-                    coleccion.ChangeItemPosition(items[i],i);
+            List<UIElement> items = new List<UIElement>(coleccion.OfType<UIElement>());
+            items.Sort();
+            for (int i = 0; i < items.Count; i++)
+                coleccion.ChangeItemPosition(items[i], i);
         }
         public static void ChangeItemPosition(this UIElementCollection coleccion, UIElement elementColection, int newPosition)
         {
@@ -149,6 +152,67 @@ namespace Gabriel.Cat.Extension
                 coleccion.Insert(newPosition, elementColection);
             }
         }
+        #region RichTextBox
+        public static void SetText(this RichTextBox rtBox, string text)
+        {
+            new TextRange(rtBox.Document.ContentStart, rtBox.Document.ContentEnd).Text = text;
+        }
+        public static string GetText(this RichTextBox rtBox)
+        {
+            return new TextRange(rtBox.Document.ContentStart, rtBox.Document.ContentEnd).Text;
+        }
+        public static void SetelectedText(this RichTextBox rtBox, string text)
+        {
+            new TextRange(rtBox.Selection.Start, rtBox.Selection.End).Text = text;
+        }
+        public static string GetSelectedText(this RichTextBox rtBox)
+        {
+            return new TextRange(rtBox.Selection.Start, rtBox.Selection.End).Text;
+        }
+
+        public static Object LoadObjectXml(this XmlNode obj)
+        {
+            StringReader stringReader = new StringReader(obj.OuterXml);
+            XmlReader xmlReader = XmlReader.Create(stringReader);
+            return XamlReader.Load(xmlReader);
+
+        }
+        public static XmlNode SaveObjectXml(this Object obj)
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(XamlWriter.Save(obj));
+            return xml.FirstChild;
+        }
+
+        public static XmlNodeList GetElementsByTagName(this XmlNodeList list, string tagName)
+        {
+            XmlDocument xmlList = new XmlDocument();
+            foreach (XmlNode nodo in list)
+                if (nodo.Name == tagName)
+                    xmlList.AppendChild(nodo);
+            return xmlList.ChildNodes;
+        }
+        public static string ToStringRtf(this RichTextBox rt)
+        {
+            string textRtf = null;
+            TextRange range = new TextRange(rt.Document.ContentStart, rt.Document.ContentEnd);
+            MemoryStream stream = new MemoryStream();
+            StreamReader reader;
+            range.Save(stream, DataFormats.Rtf);
+            stream.Position = 0;
+            reader = new StreamReader(stream, Encoding.UTF8);
+            textRtf = reader.ReadToEnd();
+            reader.Close();
+            stream.Close();
+            return textRtf;
+        }
+        public static void LoadRtf(this RichTextBox rt,string stringInRtfFormat)
+        {
+            MemoryStream stream = new MemoryStream(ASCIIEncoding.Default.GetBytes(stringInRtfFormat));
+            rt.Selection.Load(stream, DataFormats.Rtf);
+            stream.Close();
+        }
+        #endregion
     }
 }
 
