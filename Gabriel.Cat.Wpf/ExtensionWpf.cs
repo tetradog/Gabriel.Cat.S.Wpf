@@ -26,6 +26,8 @@ using System.Xml;
 using System.Windows.Markup;
 using System.IO;
 using Gabriel.Cat.Extension;
+using System.Reflection;
+
 namespace Gabriel.Cat.Extension
 {
     public static class ExtensionWpf
@@ -87,7 +89,36 @@ namespace Gabriel.Cat.Extension
             };
             return Serializar.ToInt(argb);
         }
+        public static System.Windows.Controls.Image ToImage(this Bitmap bmp)
+        {
 
+            BitmapImage bmpImg = new BitmapImage();
+            System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+            bmpImg.StreamSource = bmp.ToStream();
+            img.Source = bmpImg;
+            return img;
+        }
+        public static Bitmap ToBitmap(this System.Windows.Media.Color color,int width,int height)
+        {
+            Bitmap bmp = new Bitmap(width,height);
+            int pos;
+            bmp.TrataBytes((matrizBytes) =>
+            {
+                for (int y = 0, xFinal = width * 4; y < height; y++)
+                    for (int x = 0; x < xFinal; x += 4) {
+                        pos = y * xFinal + x;//bgra esta permutado...
+                        matrizBytes[pos+2] = color.R;
+                        matrizBytes[pos + 1] = color.G;
+                        matrizBytes[pos] = color.B;
+                        matrizBytes[pos+3] = 255;
+                    }
+            });
+            return bmp;
+        }
+        public static string GetName(this System.Windows.Media.Color color)
+        {
+            return Colores.GetName(color);      
+        }
         public static System.Windows.Media.Color Invertir(this System.Windows.Media.Color color)
         {
             return System.Windows.Media.Color.FromArgb((byte)Math.Abs((int)color.A - 255), (byte)System.Math.Abs((int)color.R - 255), (byte)System.Math.Abs((int)color.G - 255), (byte)System.Math.Abs((int)color.B - 255));

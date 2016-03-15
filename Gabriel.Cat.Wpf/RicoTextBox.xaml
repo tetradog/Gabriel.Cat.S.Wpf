@@ -9,35 +9,34 @@
     <RichTextBox x:Name="rtText" TextChanged="rtText_TextChanged" >
         <RichTextBox.ContextMenu>
             <ContextMenu Background="White">
-                <MenuItem Header="Cortar">
+                <MenuItem Header="Cortar" Click="Cortar_Click">
                     <MenuItem.Icon>
                         <Image x:Name="imgCortar"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Copiar" >
+                <MenuItem Header="Copiar" Click="Copiar_Click" >
                     <MenuItem.Icon>
                         <Image x:Name="imgCopiar"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Pegar" >
+                <MenuItem Header="Pegar" Click="Pegar_Click" >
                     <MenuItem.Icon>
                         <Image x:Name="imgPegar"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Tamaño" >
+                <MenuItem Header="Tamaño" Name="menuTamañoLetra" >
                     <MenuItem Header="1" Background="White"/>
                 </MenuItem>
-                <MenuItem Header="Tipo" >
+                <MenuItem Header="Tipo" Name="menuTipoLetra" >
                     <MenuItem Header="Arial" Background="White"/>
                 </MenuItem>
-                <MenuItem Header="Alineamiento" >
+                <MenuItem Header="Alineamiento" Name="menuAlineamientoLetra" >
                     <MenuItem Header="Izquierda" Background="White"/>
                 </MenuItem>
-                <MenuItem Header="Color" >
-                    <MenuItem Header="Verde" Foreground="Green" Background="White"/>
-                </MenuItem>
+                <MenuItem Header="Color" Name="menuColorLetra" />
             </ContextMenu>
         </RichTextBox.ContextMenu>
     </RichTextBox>
+    
 </UserControl>
