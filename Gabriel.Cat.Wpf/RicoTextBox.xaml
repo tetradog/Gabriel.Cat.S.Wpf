@@ -54,7 +54,7 @@
                 <Separator />
                 <MenuItem Header="Tamaño" Name="menuTamañoLetra" />
 
-                <MenuItem Header="Tipo" Name="menuTipoLetra" />
+                <MenuItem Header="Familia" Name="menuTipoLetra" />
 
                 <MenuItem Header="Alineamiento" Name="menuAlineamientoLetra" />
 

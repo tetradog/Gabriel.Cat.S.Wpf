@@ -47,34 +47,40 @@ namespace Gabriel.Cat.Wpf
             System.Windows.Media.Color[] colores = Colores.ListaColores;
             TextAlignment[] alienamientos = (TextAlignment[])Enum.GetValues(typeof(TextAlignment));
             double[] tamaños = { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 74 };
-            System.Windows.Media.FontFamily[] fontFamilies = Fonts.SystemFontFamilies.ToArray();//cojo las familias de algun lado...
-          KeyValuePair<string,MetodoSinParametros>[] metodosExtra;
+            System.Windows.Media.FontFamily[] fontFamilies = Fonts.SystemFontFamilies.ToArray();
+            KeyValuePair<string, MetodoSinParametros>[] metodosExtra;
             InitializeComponent();
-            metodosExtra =new KeyValuePair<string, MetodoSinParametros>[] {
+            metodosExtra = new KeyValuePair<string, MetodoSinParametros>[] {
                 new KeyValuePair<string, MetodoSinParametros>("Oblique", rtText.ObliqueSelection),
-                new KeyValuePair<string, MetodoSinParametros>("OverLine", rtText.OverLineSelection),
-                new KeyValuePair<string, MetodoSinParametros>("SemiBold", rtText.SemiBoldSelection),
-                new KeyValuePair<string, MetodoSinParametros>("UltraBlack", rtText.UltraBlackSelection),
 
-                new KeyValuePair<string, MetodoSinParametros>("Strikethrough", rtText.StrikethroughSelection),
                 new KeyValuePair<string, MetodoSinParametros>("Baseline", rtText.BaselineSelection),
-                new KeyValuePair<string, MetodoSinParametros>("Black", rtText.BlackSelection),
-                new KeyValuePair<string, MetodoSinParametros>("DemiBold", rtText.DemiBoldSelection),
+                new KeyValuePair<string, MetodoSinParametros>("OverLine", rtText.OverLineSelection),
+                new KeyValuePair<string, MetodoSinParametros>("Strikethrough", rtText.StrikethroughSelection),
+                new KeyValuePair<string, MetodoSinParametros>("SemiBold", rtText.SemiBoldSelection),
 
+                new KeyValuePair<string, MetodoSinParametros>("Black", rtText.BlackSelection),
                 new KeyValuePair<string, MetodoSinParametros>("ExtraBlack", rtText.ExtraBlackSelection),
+                new KeyValuePair<string, MetodoSinParametros>("UltraBlack", rtText.UltraBlackSelection),
+                
+                new KeyValuePair<string, MetodoSinParametros>("DemiBold", rtText.DemiBoldSelection),
                 new KeyValuePair<string, MetodoSinParametros>("ExtraBold", rtText.ExtraBoldSelection),
-                new KeyValuePair<string, MetodoSinParametros>("ExtraLight", rtText.ExtraLightSelection),
-                new KeyValuePair<string, MetodoSinParametros>("Heavy", rtText.HeavySelection),
+                new KeyValuePair<string, MetodoSinParametros>("UltraBold", rtText.UltraBoldSelection),
 
                 new KeyValuePair<string, MetodoSinParametros>("Light", rtText.LightSelection),
-                new KeyValuePair<string, MetodoSinParametros>("Medium", rtText.MediumSelection),
-                new KeyValuePair<string, MetodoSinParametros>("Regular", rtText.RegularSelection),
-                new KeyValuePair<string, MetodoSinParametros>("Thin", rtText.ThinSelection),
+                new KeyValuePair<string, MetodoSinParametros>("ExtraLight", rtText.ExtraLightSelection),
+                new KeyValuePair<string, MetodoSinParametros>("UltraLight", rtText.UltraLightSelection),
 
-                new KeyValuePair<string, MetodoSinParametros>("UltraBold", rtText.UltraBoldSelection),
-                new KeyValuePair<string, MetodoSinParametros>("UltraLight", rtText.UltraLightSelection)
+                new KeyValuePair<string, MetodoSinParametros>("Thin", rtText.ThinSelection),
+                new KeyValuePair<string, MetodoSinParametros>("Heavy", rtText.HeavySelection),
+  
+                new KeyValuePair<string, MetodoSinParametros>("Medium", rtText.MediumSelection),
+                new KeyValuePair<string, MetodoSinParametros>("Regular", rtText.RegularSelection)
+                
+
+               
+                
             };
-            
+
             rtText.AutoWordSelection = false;
             imgCopiar.SetImage(Resource1.copiar);
             imgPegar.SetImage(Resource1.pegar);
@@ -149,7 +155,7 @@ namespace Gabriel.Cat.Wpf
                 menuExtra.Items.Add(item);
             }
             menuExtra.UpdateLayout();
-       
+
 
         }
 
@@ -170,7 +176,7 @@ namespace Gabriel.Cat.Wpf
 
                 if (value == null)
                     value = "";
-           
+
                 rtText.SetText(value);
             }
         }
@@ -181,8 +187,11 @@ namespace Gabriel.Cat.Wpf
                 return rtText.ToStringRtf();
             }
             set
-            {//no se porque le aparece enters
+            {
+                //solucionar lo de los enters fantasma
                 rtText.LoadStringRtf(value);
+             
+                
             }
         }
 

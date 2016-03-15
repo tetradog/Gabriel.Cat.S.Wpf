@@ -361,8 +361,9 @@ namespace Gabriel.Cat.Extension
         }
         public static void LoadStringRtf(this RichTextBox rt,string stringInRtfFormat)
         {
-            MemoryStream stream = new MemoryStream(ASCIIEncoding.Default.GetBytes(stringInRtfFormat));
-            rt.Selection.Load(stream, DataFormats.Rtf);
+            MemoryStream stream = new MemoryStream(ASCIIEncoding.UTF8.GetBytes(stringInRtfFormat));
+            rt.SelectAll();
+            rt.SelectedText().Load(stream, DataFormats.Rtf);
             stream.Close();
         }
         #endregion
