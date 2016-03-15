@@ -19,21 +19,44 @@
                         <Image x:Name="imgCopiar"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Pegar" Click="Pegar_Click" >
+                <MenuItem Header="Pegar" Click="Pegar_Click"  >
                     <MenuItem.Icon>
                         <Image x:Name="imgPegar"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Tamaño" Name="menuTamañoLetra" >
-                    <MenuItem Header="1" Background="White"/>
+                <MenuItem Header="Cursiva" Click="Cursiva_Click">
+                    <MenuItem.Icon>
+                        <Image x:Name="imgCursiva"/>
+                    </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Tipo" Name="menuTipoLetra" >
-                    <MenuItem Header="Arial" Background="White"/>
+                <MenuItem Header="Negrita" Click="Negrita_Click" >
+                    <MenuItem.Icon>
+                        <Image x:Name="imgNegrita"/>
+                    </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Alineamiento" Name="menuAlineamientoLetra" >
-                    <MenuItem Header="Izquierda" Background="White"/>
+                <MenuItem Header="Subrallado" Click="Subrallado_Click" >
+                    <MenuItem.Icon>
+                        <Image x:Name="imgSubrallado"/>
+                    </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Marcado" x:Name="menuMarcador" >
+                    <MenuItem.Icon>
+                        <Image x:Name="imgMarcado"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Normal" Click="Normal_Click" >
+                    <MenuItem.Icon>
+                        <Image x:Name="imgNormal"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Tamaño" Name="menuTamañoLetra" />
+
+                <MenuItem Header="Tipo" Name="menuTipoLetra" />
+
+                <MenuItem Header="Alineamiento" Name="menuAlineamientoLetra" />
+
                 <MenuItem Header="Color" Name="menuColorLetra" />
             </ContextMenu>
         </RichTextBox.ContextMenu>

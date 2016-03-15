@@ -91,12 +91,13 @@ namespace Gabriel.Cat.Extension
         }
         public static System.Windows.Controls.Image ToImage(this Bitmap bmp)
         {
-
-            BitmapImage bmpImg = new BitmapImage();
             System.Windows.Controls.Image img = new System.Windows.Controls.Image();
-            bmpImg.StreamSource = bmp.ToStream();
-            img.Source = bmpImg;
+            img.SetImage(bmp);
             return img;
+        }
+        public static System.Windows.Controls.Image ToImage(this System.Windows.Media.Color color,int width,int height)
+        {
+            return color.ToBitmap(width, height).ToImage();
         }
         public static Bitmap ToBitmap(this System.Windows.Media.Color color,int width,int height)
         {
@@ -151,6 +152,7 @@ namespace Gabriel.Cat.Extension
             imgCargada.SetImage(bmp);
             img.Source = imgCargada;
         }
+
         public static void SetImage(this BitmapImage bmpImg, System.Drawing.Bitmap bmp)
         {
             bmpImg.BeginInit();
@@ -184,6 +186,122 @@ namespace Gabriel.Cat.Extension
             }
         }
         #region RichTextBox
+
+        public static void UndeLineSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.Underline);
+        }
+        public static void StrikethroughSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.Strikethrough);
+        }
+        public static void OverLineSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.OverLine);
+        }
+        public static void BaselineSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.Baseline);
+        }
+        public static void BoldSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+        }
+        public static void BlackSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Black);
+        }
+        public static void DemiBoldSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.DemiBold);
+        }
+        public static void ExtraBlackSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.ExtraBlack);
+        }
+        public static void ExtraBoldSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.ExtraBold);
+        }
+        public static void ExtraLightSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.ExtraLight);
+        }
+        public static void HeavySelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Heavy);
+        }
+        public static void LightSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Light);
+        }
+        public static void MediumSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Medium);
+        }
+        public static void NormalSelection(this RichTextBox rtBox)
+        {
+            //le quita todo!!
+            TextRange txtRange = rtBox.SelectedText();
+            txtRange.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
+            txtRange.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Normal);
+            txtRange.ApplyPropertyValue(Inline.TextDecorationsProperty, null);
+            rtBox.SelectionMarcador(Colors.Transparent);
+
+        }
+        public static void RegularSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
+        }
+        public static void SemiBoldSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.SemiBold);
+        }
+        public static void ThinSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Thin);
+        }
+        public static void UltraBlackSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.UltraBlack);
+        }
+        public static void UltraBoldSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.UltraBold);
+        }
+        public static void UltraLightSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.UltraLight);
+        }
+        public static void ItalicSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Italic);
+        }
+        public static void ObliqueSelection(this RichTextBox rtBox)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Oblique);
+        }
+        public static void SelectionAligment(this RichTextBox rtBox, TextAlignment aligment)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(Paragraph.TextAlignmentProperty,aligment);
+        }
+        public static void SelectionSize(this RichTextBox rtBox, double leterSize)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(Paragraph.FontSizeProperty, leterSize);
+        }
+        public static void FontFamilySelection(this RichTextBox rtBox, System.Windows.Media.FontFamily fontFamily)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(Paragraph.FontFamilyProperty,fontFamily);
+        }
+        public static void SelectionMarcador(this RichTextBox rtBox, System.Windows.Media.Color color)
+        {
+            rtBox.SelectedText().ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(color));
+        }
+    
+        public static TextRange SelectedText(this RichTextBox rtBox)
+        {
+            return new TextRange(rtBox.Selection.Start, rtBox.Selection.End); 
+        }
         public static void SetText(this RichTextBox rtBox, string text)
         {
             new TextRange(rtBox.Document.ContentStart, rtBox.Document.ContentEnd).Text = text;
@@ -194,13 +312,17 @@ namespace Gabriel.Cat.Extension
         }
         public static void SetelectedText(this RichTextBox rtBox, string text)
         {
-            new TextRange(rtBox.Selection.Start, rtBox.Selection.End).Text = text;
+            rtBox.SelectedText().Text = text;
         }
         public static string GetSelectedText(this RichTextBox rtBox)
         {
-            return new TextRange(rtBox.Selection.Start, rtBox.Selection.End).Text;
+            return rtBox.SelectedText().Text;
         }
-
+        public static void SelectedColor(this RichTextBox rtbox,System.Windows.Media.Color color)
+        {
+          
+            rtbox.SelectedText().ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(color));
+        }
         public static Object LoadObjectXml(this XmlNode obj)
         {
             StringReader stringReader = new StringReader(obj.OuterXml);

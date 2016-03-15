@@ -531,5 +531,20 @@
   <ItemGroup>
     <None Include="Resources\YellowGreen.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ImgsRicoTextBox\cursiva.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ImgsRicoTextBox\negrita.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ImgsRicoTextBox\Subrallado.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ImgsRicoTextBox\normal.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ImgsRicoTextBox\marcador.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

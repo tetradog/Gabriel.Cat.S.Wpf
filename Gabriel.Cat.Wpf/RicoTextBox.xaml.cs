@@ -24,42 +24,99 @@ namespace Gabriel.Cat.Wpf
     /// </summary>
     public partial class RicoTextBox : UserControl
     {
+        //poder añadir una imagen desde el menu porque el copiar y pegar ya lo permite :)
+        //poner marcado
         public event TextChangedEventHandler TextoCambiado;
-        static  LlistaOrdenada<string, System.Windows.Controls.Image> imgDiccionary = new LlistaOrdenada<string, System.Windows.Controls.Image>();
+        static TwoKeysList<string, string, System.Windows.Controls.Image> imgDiccionary;
         static RicoTextBox()
         {
-            System.Windows.Media.Color[] colores = Colores.GetColors().ToArray();
+            imgDiccionary = new TwoKeysList<string, string, System.Windows.Controls.Image>();
+            System.Windows.Media.Color[] colores = Colores.ListaColores;
             System.Windows.Controls.Image img;
             for (int i = 0; i < colores.Length; i++)
             {
-                img = new System.Windows.Controls.Image();
-                img.SetImage(colores[i].ToBitmap(20,15));
-                imgDiccionary.Afegir(colores[i].ToString(), img);
+                img = colores[i].ToImage(20, 15);
+                imgDiccionary.Add(colores[i].GetName(), colores[i].ToString(), img);
             }
 
         }
         public RicoTextBox()
         {
             MenuItem item;
-            System.Windows.Media.Color[] colores = Colores.GetColors().ToArray();
-          
+            System.Windows.Media.Color[] colores = Colores.ListaColores;
+            TextAlignment[] alienamientos = (TextAlignment[])Enum.GetValues(typeof(TextAlignment));
+            double[] tamaños = { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 74 };
+            System.Windows.Media.FontFamily[] fontFamilies = Fonts.SystemFontFamilies.ToArray();//cojo las familias de algun lado...
+            
             InitializeComponent();
+            rtText.AutoWordSelection = false;
             imgCopiar.SetImage(Resource1.copiar);
             imgPegar.SetImage(Resource1.pegar);
             imgCortar.SetImage(Resource1.cortar);
+            imgSubrallado.SetImage(Resource1.subrallado);
+            imgNegrita.SetImage(Resource1.negrita);
+            imgCursiva.SetImage(Resource1.cursiva);
+            imgNormal.SetImage(Resource1.normal);
+            imgMarcado.SetImage(Resource1.marcador);
             for (int i = 0; i < colores.Length; i++)
             {
-                item = new MenuItem();                
-                item.Header = colores[i].GetName();
-                
+                item = new MenuItem();
+                item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
+
                 item.Click += CambiarColorTextoSeleccionado;
-                item.Icon =imgDiccionary[colores[i].ToString()];
+                item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
                 item.Visibility = Visibility.Visible;
                 item.Tag = colores[i];
                 menuColorLetra.Items.Add(item);
             }
             menuColorLetra.UpdateLayout();
+            for (int i = 0; i < colores.Length; i++)
+            {
+                item = new MenuItem();
+                item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
+
+                item.Click += PonMarcadorDeEsteColor;
+                item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
+                item.Visibility = Visibility.Visible;
+                item.Tag = colores[i];
+                menuMarcador.Items.Add(item);
+            }
+            menuMarcador.UpdateLayout();
+            for (int i = 0; i < alienamientos.Length; i++)
+            {
+                item = new MenuItem();
+                item.Header = alienamientos[i].ToString();
+                item.Click += PonAlineamientoTextoSeleccionado;
+                item.Tag = alienamientos[i];
+                item.Visibility = Visibility.Visible;
+                menuAlineamientoLetra.Items.Add(item);
+            }
+            menuAlineamientoLetra.UpdateLayout();
+            for (int i = 0; i < tamaños.Length; i++)
+            {
+                item = new MenuItem();
+                item.Header = tamaños[i].ToString();
+                item.Click += PonTamañoTextoSeleccionado;
+                item.Tag = tamaños[i];
+                item.Visibility = Visibility.Visible;
+                menuTamañoLetra.Items.Add(item);
+            }
+            menuTamañoLetra.UpdateLayout();
+            for (int i = 0; i < fontFamilies.Length; i++)
+            {
+                item = new MenuItem();
+                item.Header = fontFamilies[i].ToString();
+                item.FontFamily = fontFamilies[i];
+                item.Click += PonFuenteTextoSelecciondado;
+                item.Tag = fontFamilies[i];
+                item.Visibility = Visibility.Visible;
+                menuTipoLetra.Items.Add(item);
+            }
+            menuTipoLetra.UpdateLayout();
+
+
         }
+
 
 
         public string Text
@@ -109,9 +166,42 @@ namespace Gabriel.Cat.Wpf
         }
         private void CambiarColorTextoSeleccionado(object sender, RoutedEventArgs e)
         {
-            TextRange txtRange = new TextRange(rtText.Selection.Start, rtText.Selection.End);
-            txtRange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush((System.Windows.Media.Color)((MenuItem)sender).Tag));
+            rtText.SelectedColor((System.Windows.Media.Color)((MenuItem)sender).Tag);
         }
 
+        private void Cursiva_Click(object sender, RoutedEventArgs e)
+        {
+            rtText.ItalicSelection();
+        }
+        private void Negrita_Click(object sender, RoutedEventArgs e)
+        {
+            rtText.BoldSelection();
+        }
+        private void Subrallado_Click(object sender, RoutedEventArgs e)
+        {
+            rtText.UndeLineSelection();
+        }
+        private void PonMarcadorDeEsteColor(object sender, RoutedEventArgs e)
+        {
+            rtText.SelectionMarcador((System.Windows.Media.Color)((MenuItem)sender).Tag);
+        }
+        private void Normal_Click(object sender, RoutedEventArgs e)
+        {
+            rtText.NormalSelection();
+        }
+
+        private void PonTamañoTextoSeleccionado(object sender, RoutedEventArgs e)
+        {
+            rtText.SelectionSize(Math.Round((double)((MenuItem)sender).Tag, 2));
+        }
+
+        private void PonAlineamientoTextoSeleccionado(object sender, RoutedEventArgs e)
+        {
+            rtText.SelectionAligment((TextAlignment)((MenuItem)sender).Tag);
+        }
+        private void PonFuenteTextoSelecciondado(object sender, RoutedEventArgs e)
+        {
+            rtText.FontFamilySelection((System.Windows.Media.FontFamily)((MenuItem)sender).Tag);
+        }
     }
 }
