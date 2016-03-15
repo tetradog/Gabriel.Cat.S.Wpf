@@ -26,6 +26,7 @@ namespace Gabriel.Cat.Wpf
     {
         //poder añadir una imagen desde el menu porque el copiar y pegar ya lo permite :)
         //poner marcado
+        delegate void MetodoSinParametros();
         public event TextChangedEventHandler TextoCambiado;
         static TwoKeysList<string, string, System.Windows.Controls.Image> imgDiccionary;
         static RicoTextBox()
@@ -47,8 +48,33 @@ namespace Gabriel.Cat.Wpf
             TextAlignment[] alienamientos = (TextAlignment[])Enum.GetValues(typeof(TextAlignment));
             double[] tamaños = { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 74 };
             System.Windows.Media.FontFamily[] fontFamilies = Fonts.SystemFontFamilies.ToArray();//cojo las familias de algun lado...
-            
+          KeyValuePair<string,MetodoSinParametros>[] metodosExtra;
             InitializeComponent();
+            metodosExtra =new KeyValuePair<string, MetodoSinParametros>[] {
+                new KeyValuePair<string, MetodoSinParametros>("Oblique", rtText.ObliqueSelection),
+                new KeyValuePair<string, MetodoSinParametros>("OverLine", rtText.OverLineSelection),
+                new KeyValuePair<string, MetodoSinParametros>("SemiBold", rtText.SemiBoldSelection),
+                new KeyValuePair<string, MetodoSinParametros>("UltraBlack", rtText.UltraBlackSelection),
+
+                new KeyValuePair<string, MetodoSinParametros>("Strikethrough", rtText.StrikethroughSelection),
+                new KeyValuePair<string, MetodoSinParametros>("Baseline", rtText.BaselineSelection),
+                new KeyValuePair<string, MetodoSinParametros>("Black", rtText.BlackSelection),
+                new KeyValuePair<string, MetodoSinParametros>("DemiBold", rtText.DemiBoldSelection),
+
+                new KeyValuePair<string, MetodoSinParametros>("ExtraBlack", rtText.ExtraBlackSelection),
+                new KeyValuePair<string, MetodoSinParametros>("ExtraBold", rtText.ExtraBoldSelection),
+                new KeyValuePair<string, MetodoSinParametros>("ExtraLight", rtText.ExtraLightSelection),
+                new KeyValuePair<string, MetodoSinParametros>("Heavy", rtText.HeavySelection),
+
+                new KeyValuePair<string, MetodoSinParametros>("Light", rtText.LightSelection),
+                new KeyValuePair<string, MetodoSinParametros>("Medium", rtText.MediumSelection),
+                new KeyValuePair<string, MetodoSinParametros>("Regular", rtText.RegularSelection),
+                new KeyValuePair<string, MetodoSinParametros>("Thin", rtText.ThinSelection),
+
+                new KeyValuePair<string, MetodoSinParametros>("UltraBold", rtText.UltraBoldSelection),
+                new KeyValuePair<string, MetodoSinParametros>("UltraLight", rtText.UltraLightSelection)
+            };
+            
             rtText.AutoWordSelection = false;
             imgCopiar.SetImage(Resource1.copiar);
             imgPegar.SetImage(Resource1.pegar);
@@ -113,11 +139,25 @@ namespace Gabriel.Cat.Wpf
                 menuTipoLetra.Items.Add(item);
             }
             menuTipoLetra.UpdateLayout();
-
+            for (int i = 0; i < metodosExtra.Length; i++)
+            {
+                item = new MenuItem();
+                item.Header = metodosExtra[i].Key.ToString();
+                item.Click += HazMetodoExtra;
+                item.Tag = metodosExtra[i].Value;
+                item.Visibility = Visibility.Visible;
+                menuExtra.Items.Add(item);
+            }
+            menuExtra.UpdateLayout();
+       
 
         }
 
-
+        private void HazMetodoExtra(object sender, RoutedEventArgs e)
+        {
+            MetodoSinParametros metodo = ((MenuItem)sender).Tag as MetodoSinParametros;
+            metodo();
+        }
 
         public string Text
         {
@@ -130,7 +170,7 @@ namespace Gabriel.Cat.Wpf
 
                 if (value == null)
                     value = "";
-
+           
                 rtText.SetText(value);
             }
         }

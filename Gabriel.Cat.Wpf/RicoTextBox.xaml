@@ -25,6 +25,11 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
+                <MenuItem Header="Normal" Click="Normal_Click" >
+                    <MenuItem.Icon>
+                        <Image x:Name="imgNormal"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="Cursiva" Click="Cursiva_Click">
                     <MenuItem.Icon>
                         <Image x:Name="imgCursiva"/>
@@ -45,11 +50,7 @@
                         <Image x:Name="imgMarcado"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Normal" Click="Normal_Click" >
-                    <MenuItem.Icon>
-                        <Image x:Name="imgNormal"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+                <MenuItem Header="Extra" x:Name="menuExtra" />
                 <Separator />
                 <MenuItem Header="Tamaño" Name="menuTamañoLetra" />
 
