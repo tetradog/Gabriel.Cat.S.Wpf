@@ -362,7 +362,7 @@ namespace Gabriel.Cat.Extension
         public static void LoadStringRtf(this RichTextBox rt,string stringInRtfFormat)
         {
             MemoryStream stream = new MemoryStream(ASCIIEncoding.UTF8.GetBytes(stringInRtfFormat));
-            rt.SelectAll();
+            rt.SelectAll();//esta para solucionar los enters fantasma
             rt.SelectedText().Load(stream, DataFormats.Rtf);
             stream.Close();
         }
