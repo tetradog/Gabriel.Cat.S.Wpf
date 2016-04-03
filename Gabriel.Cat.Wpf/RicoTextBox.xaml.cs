@@ -24,10 +24,14 @@ namespace Gabriel.Cat.Wpf
     /// </summary>
     public partial class RicoTextBox : UserControl
     {
+       //hay un bug que a veces no carga los colores...mirar de clonar las imagenes :)
         //poder añadir una imagen desde el menu porque el copiar y pegar ya lo permite :)
         //poner marcado
         delegate void MetodoSinParametros();
         public event TextChangedEventHandler TextoCambiado;
+        ulong textChangedTimes;
+
+
         static TwoKeysList<string, string, System.Windows.Controls.Image> imgDiccionary;
         static RicoTextBox()
         {
@@ -40,17 +44,31 @@ namespace Gabriel.Cat.Wpf
                 imgDiccionary.Add(colores[i].GetName(), colores[i].ToString(), img);
             }
 
+
         }
-        public RicoTextBox()
+        public RicoTextBox():this(true)
+        { }
+        public RicoTextBox(bool cargarMenu)
         {
             MenuItem item;
-            System.Windows.Media.Color[] colores = Colores.ListaColores;
-            TextAlignment[] alienamientos = (TextAlignment[])Enum.GetValues(typeof(TextAlignment));
-            double[] tamaños = { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 74 };
-            System.Windows.Media.FontFamily[] fontFamilies = Fonts.SystemFontFamilies.ToArray();
+            System.Windows.Media.Color[] colores;
+            TextAlignment[] alienamientos;
             KeyValuePair<string, MetodoSinParametros>[] metodosExtra;
+            double[] tamaños; 
+            System.Windows.Media.FontFamily[] fontFamilies;
+
             InitializeComponent();
-            metodosExtra = new KeyValuePair<string, MetodoSinParametros>[] {
+            
+            if (cargarMenu)
+            {
+                colores = Colores.ListaColores;
+                alienamientos = (TextAlignment[])Enum.GetValues(typeof(TextAlignment));
+                tamaños = new double[]{ 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 74 };
+                fontFamilies = Fonts.SystemFontFamilies.ToArray();
+                
+
+
+                metodosExtra = new KeyValuePair<string, MetodoSinParametros>[] {
                 new KeyValuePair<string, MetodoSinParametros>("Oblique", rtText.ObliqueSelection),
 
                 new KeyValuePair<string, MetodoSinParametros>("Baseline", rtText.BaselineSelection),
@@ -81,82 +99,82 @@ namespace Gabriel.Cat.Wpf
                 
             };
 
-            rtText.AutoWordSelection = false;
-            imgCopiar.SetImage(Resource1.copiar);
-            imgPegar.SetImage(Resource1.pegar);
-            imgCortar.SetImage(Resource1.cortar);
-            imgSubrallado.SetImage(Resource1.subrallado);
-            imgNegrita.SetImage(Resource1.negrita);
-            imgCursiva.SetImage(Resource1.cursiva);
-            imgNormal.SetImage(Resource1.normal);
-            imgMarcado.SetImage(Resource1.marcador);
-            for (int i = 0; i < colores.Length; i++)
-            {
-                item = new MenuItem();
-                item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
+                rtText.AutoWordSelection = false;
+                imgCopiar.SetImage(Resource1.copiar);
+                imgPegar.SetImage(Resource1.pegar);
+                imgCortar.SetImage(Resource1.cortar);
+                imgSubrallado.SetImage(Resource1.subrallado);
+                imgNegrita.SetImage(Resource1.negrita);
+                imgCursiva.SetImage(Resource1.cursiva);
+                imgNormal.SetImage(Resource1.normal);
+                imgMarcado.SetImage(Resource1.marcador);
+                for (int i = 0; i < colores.Length; i++)
+                {
+                    item = new MenuItem();
+                    item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
 
-                item.Click += CambiarColorTextoSeleccionado;
-                item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
-                item.Visibility = Visibility.Visible;
-                item.Tag = colores[i];
-                menuColorLetra.Items.Add(item);
-            }
-            menuColorLetra.UpdateLayout();
-            for (int i = 0; i < colores.Length; i++)
-            {
-                item = new MenuItem();
-                item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
+                    item.Click += CambiarColorTextoSeleccionado;
+                    item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
+                    item.Visibility = Visibility.Visible;
+                    item.Tag = colores[i];
+                    menuColorLetra.Items.Add(item);
+                }
+                menuColorLetra.UpdateLayout();
+                for (int i = 0; i < colores.Length; i++)
+                {
+                    item = new MenuItem();
+                    item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
 
-                item.Click += PonMarcadorDeEsteColor;
-                item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
-                item.Visibility = Visibility.Visible;
-                item.Tag = colores[i];
-                menuMarcador.Items.Add(item);
+                    item.Click += PonMarcadorDeEsteColor;
+                    item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
+                    item.Visibility = Visibility.Visible;
+                    item.Tag = colores[i];
+                    menuMarcador.Items.Add(item);
+                }
+                menuMarcador.UpdateLayout();
+                for (int i = 0; i < alienamientos.Length; i++)
+                {
+                    item = new MenuItem();
+                    item.Header = alienamientos[i].ToString();
+                    item.Click += PonAlineamientoTextoSeleccionado;
+                    item.Tag = alienamientos[i];
+                    item.Visibility = Visibility.Visible;
+                    menuAlineamientoLetra.Items.Add(item);
+                }
+                menuAlineamientoLetra.UpdateLayout();
+                for (int i = 0; i < tamaños.Length; i++)
+                {
+                    item = new MenuItem();
+                    item.Header = tamaños[i].ToString();
+                    item.Click += PonTamañoTextoSeleccionado;
+                    item.Tag = tamaños[i];
+                    item.Visibility = Visibility.Visible;
+                    menuTamañoLetra.Items.Add(item);
+                }
+                menuTamañoLetra.UpdateLayout();
+                for (int i = 0; i < fontFamilies.Length; i++)
+                {
+                    item = new MenuItem();
+                    item.Header = fontFamilies[i].ToString();
+                    item.FontFamily = fontFamilies[i];
+                    item.Click += PonFuenteTextoSelecciondado;
+                    item.Tag = fontFamilies[i];
+                    item.Visibility = Visibility.Visible;
+                    menuTipoLetra.Items.Add(item);
+                }
+                menuTipoLetra.UpdateLayout();
+                for (int i = 0; i < metodosExtra.Length; i++)
+                {
+                    item = new MenuItem();
+                    item.Header = metodosExtra[i].Key.ToString();
+                    item.Click += HazMetodoExtra;
+                    item.Tag = metodosExtra[i].Value;
+                    item.Visibility = Visibility.Visible;
+                    menuExtra.Items.Add(item);
+                }
+                menuExtra.UpdateLayout();
+                TextoCambiado += (s, o) => TextChangedTimes++;
             }
-            menuMarcador.UpdateLayout();
-            for (int i = 0; i < alienamientos.Length; i++)
-            {
-                item = new MenuItem();
-                item.Header = alienamientos[i].ToString();
-                item.Click += PonAlineamientoTextoSeleccionado;
-                item.Tag = alienamientos[i];
-                item.Visibility = Visibility.Visible;
-                menuAlineamientoLetra.Items.Add(item);
-            }
-            menuAlineamientoLetra.UpdateLayout();
-            for (int i = 0; i < tamaños.Length; i++)
-            {
-                item = new MenuItem();
-                item.Header = tamaños[i].ToString();
-                item.Click += PonTamañoTextoSeleccionado;
-                item.Tag = tamaños[i];
-                item.Visibility = Visibility.Visible;
-                menuTamañoLetra.Items.Add(item);
-            }
-            menuTamañoLetra.UpdateLayout();
-            for (int i = 0; i < fontFamilies.Length; i++)
-            {
-                item = new MenuItem();
-                item.Header = fontFamilies[i].ToString();
-                item.FontFamily = fontFamilies[i];
-                item.Click += PonFuenteTextoSelecciondado;
-                item.Tag = fontFamilies[i];
-                item.Visibility = Visibility.Visible;
-                menuTipoLetra.Items.Add(item);
-            }
-            menuTipoLetra.UpdateLayout();
-            for (int i = 0; i < metodosExtra.Length; i++)
-            {
-                item = new MenuItem();
-                item.Header = metodosExtra[i].Key.ToString();
-                item.Click += HazMetodoExtra;
-                item.Tag = metodosExtra[i].Value;
-                item.Visibility = Visibility.Visible;
-                menuExtra.Items.Add(item);
-            }
-            menuExtra.UpdateLayout();
-
-
         }
 
         private void HazMetodoExtra(object sender, RoutedEventArgs e)
@@ -178,6 +196,7 @@ namespace Gabriel.Cat.Wpf
                     value = "";
 
                 rtText.SetText(value);
+                TextChangedTimes++;
             }
         }
         public string TextWithFormat
@@ -188,13 +207,15 @@ namespace Gabriel.Cat.Wpf
             }
             set
             {
-                //solucionar lo de los enters fantasma
                 rtText.LoadStringRtf(value);
-             
-                
+                TextChangedTimes++;           
             }
         }
-
+        public ulong TextChangedTimes
+        {
+            get { return textChangedTimes; }
+           private set { textChangedTimes = value; }
+        }
         private void rtText_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (TextoCambiado != null)
