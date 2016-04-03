@@ -27,11 +27,16 @@ using System.Windows.Markup;
 using System.IO;
 using Gabriel.Cat.Extension;
 using System.Reflection;
+using System.Windows.Threading;
 
 namespace Gabriel.Cat.Extension
 {
     public static class ExtensionWpf
     {
+        public static bool InvokeRequired(this Dispatcher dispatcher)
+        {
+            return dispatcher.CheckAccess();
+        }
         #region ItemCollection
         public static void AddRange(this ItemCollection items, IEnumerable list)
         {

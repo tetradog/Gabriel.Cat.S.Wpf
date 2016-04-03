@@ -28,11 +28,12 @@ namespace Gabriel.Cat.Wpf
         //poder añadir una imagen desde el menu porque el copiar y pegar ya lo permite :)
         //poner marcado
         delegate void MetodoSinParametros();
-        public event TextChangedEventHandler TextoCambiado;
-        ulong textChangedTimes;
-
 
         static TwoKeysList<string, string, System.Windows.Controls.Image> imgDiccionary;
+        
+        ulong textChangedTimes;
+        public event TextChangedEventHandler TextoCambiado;
+        
         static RicoTextBox()
         {
             imgDiccionary = new TwoKeysList<string, string, System.Windows.Controls.Image>();
@@ -41,13 +42,19 @@ namespace Gabriel.Cat.Wpf
             for (int i = 0; i < colores.Length; i++)
             {
                 img = colores[i].ToImage(20, 15);
-                imgDiccionary.Add(colores[i].GetName(), colores[i].ToString(), img);
+                try
+                {
+                    imgDiccionary.Add(colores[i].GetName(), colores[i].ToString(), img);
+                }
+                catch { }
             }
 
 
         }
+
         public RicoTextBox():this(true)
         { }
+
         public RicoTextBox(bool cargarMenu)
         {
             MenuItem item;
@@ -56,7 +63,7 @@ namespace Gabriel.Cat.Wpf
             KeyValuePair<string, MetodoSinParametros>[] metodosExtra;
             double[] tamaños; 
             System.Windows.Media.FontFamily[] fontFamilies;
-
+           
             InitializeComponent();
             
             if (cargarMenu)
@@ -187,15 +194,18 @@ namespace Gabriel.Cat.Wpf
         {
             get
             {
-                return rtText.GetText();
+                string txt = "";
+                Action act = () => txt = rtText.GetText();
+                Dispatcher.BeginInvoke(act).Wait();
+                return txt;
             }
             set
             {
-
+                Action act;
                 if (value == null)
                     value = "";
-
-                rtText.SetText(value);
+                act = () => rtText.SetText(value);
+                Dispatcher.BeginInvoke(act).Wait();
                 TextChangedTimes++;
             }
         }
@@ -203,11 +213,15 @@ namespace Gabriel.Cat.Wpf
         {
             get
             {
-                return rtText.ToStringRtf();
+                string txtWithformat="";
+                Action act=()=>txtWithformat=rtText.ToStringRtf();
+                Dispatcher.BeginInvoke(act).Wait();
+                return txtWithformat;
             }
             set
             {
-                rtText.LoadStringRtf(value);
+                Action act = () => rtText.LoadStringRtf(value);
+                Dispatcher.BeginInvoke(act).Wait();
                 TextChangedTimes++;           
             }
         }
