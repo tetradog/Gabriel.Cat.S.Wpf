@@ -80,6 +80,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
+    <Compile Include="RichTextBoxContextMenu.xaml.cs">
+      <DependentUpon>RichTextBoxContextMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RicoTextBox.xaml.cs">
       <DependentUpon>RicoTextBox.xaml</DependentUpon>
     </Compile>
@@ -87,6 +90,10 @@
   <ItemGroup>
     <Page Include="ColorListBox.xaml" />
     <Page Include="ObjViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RichTextBoxContextMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

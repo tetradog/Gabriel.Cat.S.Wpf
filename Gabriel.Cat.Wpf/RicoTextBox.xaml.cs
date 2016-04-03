@@ -22,180 +22,21 @@ namespace Gabriel.Cat.Wpf
     /// <summary>
     /// Lógica de interacción para RicoTextBox.xaml
     /// </summary>
-    public partial class RicoTextBox : UserControl
+    public partial class RicoTextBox : RichTextBox
     {
-       //hay un bug que a veces no carga los colores...mirar de clonar las imagenes :)
-        //poder añadir una imagen desde el menu porque el copiar y pegar ya lo permite :)
-        //poner marcado
-        delegate void MetodoSinParametros();
-
-        static TwoKeysList<string, string, System.Windows.Controls.Image> imgDiccionary;
-        
-        ulong textChangedTimes;
+        private ulong textChangedTimes;
         public event TextChangedEventHandler TextoCambiado;
-        
-        static RicoTextBox()
+        public RicoTextBox():base()
         {
-            imgDiccionary = new TwoKeysList<string, string, System.Windows.Controls.Image>();
-            System.Windows.Media.Color[] colores = Colores.ListaColores;
-            System.Windows.Controls.Image img;
-            for (int i = 0; i < colores.Length; i++)
-            {
-                img = colores[i].ToImage(20, 15);
-                try
-                {
-                    imgDiccionary.Add(colores[i].GetName(), colores[i].ToString(), img);
-                }
-                catch { }
-            }
-
-
+            ContextMenu = new RichTextBoxContextMenu(this);
+            TextoCambiado += (s, o) => TextChangedTimes++;
         }
-
-        public RicoTextBox():this(true)
-        { }
-
-        public RicoTextBox(bool cargarMenu)
-        {
-            MenuItem item;
-            System.Windows.Media.Color[] colores;
-            TextAlignment[] alienamientos;
-            KeyValuePair<string, MetodoSinParametros>[] metodosExtra;
-            double[] tamaños; 
-            System.Windows.Media.FontFamily[] fontFamilies;
-           
-            InitializeComponent();
-            
-            if (cargarMenu)
-            {
-                colores = Colores.ListaColores;
-                alienamientos = (TextAlignment[])Enum.GetValues(typeof(TextAlignment));
-                tamaños = new double[]{ 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 74 };
-                fontFamilies = Fonts.SystemFontFamilies.ToArray();
-                
-
-
-                metodosExtra = new KeyValuePair<string, MetodoSinParametros>[] {
-                new KeyValuePair<string, MetodoSinParametros>("Oblique", rtText.ObliqueSelection),
-
-                new KeyValuePair<string, MetodoSinParametros>("Baseline", rtText.BaselineSelection),
-                new KeyValuePair<string, MetodoSinParametros>("OverLine", rtText.OverLineSelection),
-                new KeyValuePair<string, MetodoSinParametros>("Strikethrough", rtText.StrikethroughSelection),
-                new KeyValuePair<string, MetodoSinParametros>("SemiBold", rtText.SemiBoldSelection),
-
-                new KeyValuePair<string, MetodoSinParametros>("Black", rtText.BlackSelection),
-                new KeyValuePair<string, MetodoSinParametros>("ExtraBlack", rtText.ExtraBlackSelection),
-                new KeyValuePair<string, MetodoSinParametros>("UltraBlack", rtText.UltraBlackSelection),
-                
-                new KeyValuePair<string, MetodoSinParametros>("DemiBold", rtText.DemiBoldSelection),
-                new KeyValuePair<string, MetodoSinParametros>("ExtraBold", rtText.ExtraBoldSelection),
-                new KeyValuePair<string, MetodoSinParametros>("UltraBold", rtText.UltraBoldSelection),
-
-                new KeyValuePair<string, MetodoSinParametros>("Light", rtText.LightSelection),
-                new KeyValuePair<string, MetodoSinParametros>("ExtraLight", rtText.ExtraLightSelection),
-                new KeyValuePair<string, MetodoSinParametros>("UltraLight", rtText.UltraLightSelection),
-
-                new KeyValuePair<string, MetodoSinParametros>("Thin", rtText.ThinSelection),
-                new KeyValuePair<string, MetodoSinParametros>("Heavy", rtText.HeavySelection),
-  
-                new KeyValuePair<string, MetodoSinParametros>("Medium", rtText.MediumSelection),
-                new KeyValuePair<string, MetodoSinParametros>("Regular", rtText.RegularSelection)
-                
-
-               
-                
-            };
-
-                rtText.AutoWordSelection = false;
-                imgCopiar.SetImage(Resource1.copiar);
-                imgPegar.SetImage(Resource1.pegar);
-                imgCortar.SetImage(Resource1.cortar);
-                imgSubrallado.SetImage(Resource1.subrallado);
-                imgNegrita.SetImage(Resource1.negrita);
-                imgCursiva.SetImage(Resource1.cursiva);
-                imgNormal.SetImage(Resource1.normal);
-                imgMarcado.SetImage(Resource1.marcador);
-                for (int i = 0; i < colores.Length; i++)
-                {
-                    item = new MenuItem();
-                    item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
-
-                    item.Click += CambiarColorTextoSeleccionado;
-                    item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
-                    item.Visibility = Visibility.Visible;
-                    item.Tag = colores[i];
-                    menuColorLetra.Items.Add(item);
-                }
-                menuColorLetra.UpdateLayout();
-                for (int i = 0; i < colores.Length; i++)
-                {
-                    item = new MenuItem();
-                    item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
-
-                    item.Click += PonMarcadorDeEsteColor;
-                    item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
-                    item.Visibility = Visibility.Visible;
-                    item.Tag = colores[i];
-                    menuMarcador.Items.Add(item);
-                }
-                menuMarcador.UpdateLayout();
-                for (int i = 0; i < alienamientos.Length; i++)
-                {
-                    item = new MenuItem();
-                    item.Header = alienamientos[i].ToString();
-                    item.Click += PonAlineamientoTextoSeleccionado;
-                    item.Tag = alienamientos[i];
-                    item.Visibility = Visibility.Visible;
-                    menuAlineamientoLetra.Items.Add(item);
-                }
-                menuAlineamientoLetra.UpdateLayout();
-                for (int i = 0; i < tamaños.Length; i++)
-                {
-                    item = new MenuItem();
-                    item.Header = tamaños[i].ToString();
-                    item.Click += PonTamañoTextoSeleccionado;
-                    item.Tag = tamaños[i];
-                    item.Visibility = Visibility.Visible;
-                    menuTamañoLetra.Items.Add(item);
-                }
-                menuTamañoLetra.UpdateLayout();
-                for (int i = 0; i < fontFamilies.Length; i++)
-                {
-                    item = new MenuItem();
-                    item.Header = fontFamilies[i].ToString();
-                    item.FontFamily = fontFamilies[i];
-                    item.Click += PonFuenteTextoSelecciondado;
-                    item.Tag = fontFamilies[i];
-                    item.Visibility = Visibility.Visible;
-                    menuTipoLetra.Items.Add(item);
-                }
-                menuTipoLetra.UpdateLayout();
-                for (int i = 0; i < metodosExtra.Length; i++)
-                {
-                    item = new MenuItem();
-                    item.Header = metodosExtra[i].Key.ToString();
-                    item.Click += HazMetodoExtra;
-                    item.Tag = metodosExtra[i].Value;
-                    item.Visibility = Visibility.Visible;
-                    menuExtra.Items.Add(item);
-                }
-                menuExtra.UpdateLayout();
-                TextoCambiado += (s, o) => TextChangedTimes++;
-            }
-        }
-
-        private void HazMetodoExtra(object sender, RoutedEventArgs e)
-        {
-            MetodoSinParametros metodo = ((MenuItem)sender).Tag as MetodoSinParametros;
-            metodo();
-        }
-
         public string Text
         {
             get
             {
                 string txt = "";
-                Action act = () => txt = rtText.GetText();
+                Action act = () => txt = this.GetText();
                 Dispatcher.BeginInvoke(act).Wait();
                 return txt;
             }
@@ -204,7 +45,7 @@ namespace Gabriel.Cat.Wpf
                 Action act;
                 if (value == null)
                     value = "";
-                act = () => rtText.SetText(value);
+                act = () => this.SetText(value);
                 Dispatcher.BeginInvoke(act).Wait();
                 TextChangedTimes++;
             }
@@ -213,79 +54,27 @@ namespace Gabriel.Cat.Wpf
         {
             get
             {
-                string txtWithformat="";
-                Action act=()=>txtWithformat=rtText.ToStringRtf();
+                string txtWithformat = "";
+                Action act = () => txtWithformat = this.ToStringRtf();
                 Dispatcher.BeginInvoke(act).Wait();
                 return txtWithformat;
             }
             set
             {
-                Action act = () => rtText.LoadStringRtf(value);
+                Action act = () => this.LoadStringRtf(value);
                 Dispatcher.BeginInvoke(act).Wait();
-                TextChangedTimes++;           
+                TextChangedTimes++;
             }
         }
         public ulong TextChangedTimes
         {
             get { return textChangedTimes; }
-           private set { textChangedTimes = value; }
+            private set { textChangedTimes = value; }
         }
         private void rtText_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (TextoCambiado != null)
                 TextoCambiado(sender, e);
-        }
-
-        private void Cortar_Click(object sender, RoutedEventArgs e)
-        {
-            rtText.Cut();
-        }
-        private void Copiar_Click(object sender, RoutedEventArgs e)
-        {
-            rtText.Copy();
-        }
-        private void Pegar_Click(object sender, RoutedEventArgs e)
-        {
-            rtText.Paste();
-        }
-        private void CambiarColorTextoSeleccionado(object sender, RoutedEventArgs e)
-        {
-            rtText.SelectedColor((System.Windows.Media.Color)((MenuItem)sender).Tag);
-        }
-
-        private void Cursiva_Click(object sender, RoutedEventArgs e)
-        {
-            rtText.ItalicSelection();
-        }
-        private void Negrita_Click(object sender, RoutedEventArgs e)
-        {
-            rtText.BoldSelection();
-        }
-        private void Subrallado_Click(object sender, RoutedEventArgs e)
-        {
-            rtText.UndeLineSelection();
-        }
-        private void PonMarcadorDeEsteColor(object sender, RoutedEventArgs e)
-        {
-            rtText.SelectionMarcador((System.Windows.Media.Color)((MenuItem)sender).Tag);
-        }
-        private void Normal_Click(object sender, RoutedEventArgs e)
-        {
-            rtText.NormalSelection();
-        }
-
-        private void PonTamañoTextoSeleccionado(object sender, RoutedEventArgs e)
-        {
-            rtText.SelectionSize(Math.Round((double)((MenuItem)sender).Tag, 2));
-        }
-
-        private void PonAlineamientoTextoSeleccionado(object sender, RoutedEventArgs e)
-        {
-            rtText.SelectionAligment((TextAlignment)((MenuItem)sender).Tag);
-        }
-        private void PonFuenteTextoSelecciondado(object sender, RoutedEventArgs e)
-        {
-            rtText.FontFamilySelection((System.Windows.Media.FontFamily)((MenuItem)sender).Tag);
         }
     }
 }

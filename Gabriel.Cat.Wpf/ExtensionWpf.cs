@@ -35,7 +35,7 @@ namespace Gabriel.Cat.Extension
     {
         public static bool InvokeRequired(this Dispatcher dispatcher)
         {
-            return dispatcher.CheckAccess();
+            return !dispatcher.CheckAccess();
         }
         #region ItemCollection
         public static void AddRange(this ItemCollection items, IEnumerable list)
