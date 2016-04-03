@@ -25,11 +25,11 @@ namespace Gabriel.Cat.Wpf
     public partial class RicoTextBox : RichTextBox
     {
         private ulong textChangedTimes;
-        public event TextChangedEventHandler TextoCambiado;
+     
         public RicoTextBox():base()
         {
             ContextMenu = new RichTextBoxContextMenu(this);
-            TextoCambiado += (s, o) => TextChangedTimes++;
+            TextChanged += (s, o) => TextChangedTimes++;
         }
         public string Text
         {
@@ -71,10 +71,6 @@ namespace Gabriel.Cat.Wpf
             get { return textChangedTimes; }
             private set { textChangedTimes = value; }
         }
-        private void rtText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (TextoCambiado != null)
-                TextoCambiado(sender, e);
-        }
+
     }
 }
