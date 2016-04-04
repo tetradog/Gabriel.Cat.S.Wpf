@@ -161,7 +161,7 @@ namespace Gabriel.Cat.Extension
         public static void SetImage(this BitmapImage bmpImg, System.Drawing.Bitmap bmp)
         {
             bmpImg.BeginInit();
-            bmpImg.StreamSource = bmp.ToStream();
+            bmpImg.StreamSource = bmp.ToStream();//optimizar
             bmpImg.EndInit();
         }
         public static System.Drawing.Bitmap GetImage(this BitmapImage bmpImg)
