@@ -37,6 +37,10 @@ namespace Gabriel.Cat.Wpf
             return colores.ObtainTkey1WhithTkey2(color.ToString());
         }
 
+        public static Color GetColor(string name)
+        {
+            return colores.ObtainValueWithKey1(name);
+        }
 
     }
 }
