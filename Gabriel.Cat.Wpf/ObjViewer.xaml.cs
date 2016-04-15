@@ -42,6 +42,10 @@ namespace Gabriel.Cat.Wpf
                 txBlToStringObj.Text = obj.ToString();
             }
         }
+        public void CambiarColorLetra(System.Windows.Media.Color color)
+        {
+        	txBlToStringObj.Foreground=new SolidColorBrush(color);
+        }
         public void CambiarFondo(System.Windows.Media.Color color)
         {
             Background =new SolidColorBrush(color);
