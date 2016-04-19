@@ -86,6 +86,9 @@
     <Compile Include="RicoTextBox.xaml.cs">
       <DependentUpon>RicoTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SwitchImg.xaml.cs">
+      <DependentUpon>SwitchImg.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="ColorListBox.xaml" />
@@ -98,6 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RicoTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SwitchImg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
