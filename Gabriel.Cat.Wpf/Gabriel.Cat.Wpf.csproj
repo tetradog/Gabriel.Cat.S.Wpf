@@ -89,6 +89,7 @@
     <Compile Include="SwitchImg.xaml.cs">
       <DependentUpon>SwitchImg.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowSinBordes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="ColorListBox.xaml" />
