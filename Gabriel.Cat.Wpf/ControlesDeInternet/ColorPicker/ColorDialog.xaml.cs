@@ -34,6 +34,7 @@ namespace WPFColorPickerLib
             Image imgIco = new Image();
       InitializeComponent();
             imgIco.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
+            
          
 
       colorPicker.InitialColor = initialColor;

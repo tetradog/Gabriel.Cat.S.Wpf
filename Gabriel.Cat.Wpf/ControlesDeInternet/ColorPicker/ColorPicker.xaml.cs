@@ -55,9 +55,11 @@ namespace WPFColorPickerLib
         {
             InitializeComponent();
             this.selectedColor = initialColor;
+            this.ColorImage.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
             this.ImgCircle1.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchCircle);
-            this.ImgSqaure2.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
+            this.ImgSqaure1.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
             this.ImgSqaure2.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare2);
+        
         }
 
         #endregion
@@ -200,22 +202,28 @@ namespace WPFColorPickerLib
             if (ColorImage.Source != null)
             {
                 // Scan the canvas image for a color which matches the search color
-                CroppedBitmap cb;
+                BitmapSource source = ColorImage.Source as BitmapSource;
+                System.Drawing.Bitmap bmp = source.ToBitmap();
                 Color tempColor = new Color();
                 byte[] pixels = new byte[4];
                 int searchY = 0;
+                int pos;
                 int searchX = 0;
+                bool encontrado = false;
                 searchColor.A = 255;
-                for (searchY = 0; searchY <= canvasImage.Width - 1; searchY++)
-                {
-                    for (searchX = 0; searchX <= canvasImage.Height - 1; searchX++)
+                unsafe{
+                    bmp.TrataBytes((MetodoTratarBytePointer)((bytesImg) =>
                     {
-                        cb = new CroppedBitmap(ColorImage.Source as BitmapSource, new Int32Rect(searchX, searchY, 1, 1));
-                        cb.CopyPixels(pixels, 4, 0);
-                        tempColor = Color.FromArgb(255, pixels[2], pixels[1], pixels[0]);
-                        if (tempColor == searchColor) break;
-                    }
-                    if (tempColor == searchColor) break;
+                        for (searchY = 0, pos = 0; searchY <= canvasImage.Width - 1 && !encontrado; searchY++)
+                        {
+                            for (searchX = 0; searchX <= canvasImage.Height - 1 && !encontrado; searchX++, pos += 3)
+                            {
+                                tempColor = Color.FromArgb(255, bytesImg[pos + 2], bytesImg[pos + 1], bytesImg[pos]);
+                                if (tempColor == searchColor) encontrado = true;
+                            }
+                            if (tempColor == searchColor) encontrado = true;
+                        }
+                    }));
                 }
                 // Default to the top left if no match is found
                 if (tempColor != searchColor)

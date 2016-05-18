@@ -62,13 +62,17 @@ namespace Gabriel.Cat.Wpf
                             ColorPos colorPos= (ColorPos)imgColorToChange.Tag;
                             colorAnt = colorPos.Color;
                             pickColor= new ColorDialog();
+                            pickColor.SelectedColor =Color.FromArgb(colorPos.Color.A, colorPos.Color.R, colorPos.Color.G, colorPos.Color.B);
                             pickColor.ShowDialog();
-                            colors[colorPos.Posicion] = System.Drawing.Color.FromArgb(pickColor.SelectedColor.A, pickColor.SelectedColor.R, pickColor.SelectedColor.G, pickColor.SelectedColor.B);
-                            imgColorToChange.Tag = new ColorPos(colors[colorPos.Posicion],colorPos.Posicion);
-                            imgColorToChange.SetImage(pickColor.SelectedColor.ToBitmap(10, 10));
-                            //actualizo el color
-                            if (ColorChanged != null)
-                                ColorChanged(this, new ColorChangedArgs(colorAnt,((ColorPos) imgColorToChange.Tag).Color, ((ColorPos)imgColorToChange.Tag).Posicion));
+                            if (pickColor.DialogResult.Value)
+                            {
+                                colors[colorPos.Posicion] = System.Drawing.Color.FromArgb(pickColor.SelectedColor.A, pickColor.SelectedColor.R, pickColor.SelectedColor.G, pickColor.SelectedColor.B);
+                                imgColorToChange.Tag = new ColorPos(colors[colorPos.Posicion], colorPos.Posicion);
+                                imgColorToChange.SetImage(pickColor.SelectedColor.ToBitmap(10, 10));
+                                //actualizo el color
+                                if (ColorChanged != null)
+                                    ColorChanged(this, new ColorChangedArgs(colorAnt, ((ColorPos)imgColorToChange.Tag).Color, ((ColorPos)imgColorToChange.Tag).Posicion));
+                            }
                         };
                         imgColor.SetImage( System.Windows.Media.Color.FromArgb(colors[i].A, colors[i].R, colors[i].G, colors[i].B).ToBitmap(10,10));
                         imgColor.Tag =new ColorPos(colors[i],i);
