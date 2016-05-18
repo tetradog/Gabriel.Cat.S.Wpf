@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
+using Gabriel.Cat.Extension;
+using System.Windows.Controls;
 //sacado de http://www.codeproject.com/Articles/33001/WPF-A-Simple-Color-Picker-With-Preview
 namespace WPFColorPickerLib
 {
@@ -29,7 +31,11 @@ namespace WPFColorPickerLib
     /// <param name="initialColor">Color to set the ColorPicker to.</param>
     public ColorDialog(Color initialColor)
     {
+            Image imgIco = new Image();
       InitializeComponent();
+            imgIco.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
+         
+
       colorPicker.InitialColor = initialColor;
     }
 

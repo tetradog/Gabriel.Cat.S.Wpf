@@ -24,47 +24,54 @@ namespace Gabriel.Cat.Wpf
     {
         public event EventHandler<ColorSelectedArgs> ColorSelected;
         public event EventHandler<ColorChangedArgs> ColorChanged;
-        Color[] colors;
-        public ColorTable(params Color[] colors)
+        System.Drawing.Color[] colors;
+        public ColorTable():this(new System.Drawing.Color[] { }) { }
+        public ColorTable(params System.Drawing.Color[] colors)
         {
             InitializeComponent();
             Colors = colors;
         }
-        public Color[] Colors
+        public System.Drawing.Color[] Colors
         {
             get { return colors; }
             set
             {
                 Image imgColor;
-
-                if (value != null && value.Length > 0)
+                
+                if (value != null)
                 {
                     colors = value;
                     ugColors.Children.Clear();
                     for(int i=0;i<colors.Length;i++)
                     {
                         imgColor = new Image();
+                    
                         imgColor.MouseLeftButtonDown += (s, e) =>
                         {
+                            ColorPos colorPos;
+                            colorPos= (ColorPos) ((Image)s).Tag;
                             if (ColorSelected != null)
-                                ColorSelected(this, new ColorSelectedArgs((Color)((Image)s).Tag));
+                                ColorSelected(this, new ColorSelectedArgs(colorPos.Color,colorPos.Posicion));
                         };
                         imgColor.MouseRightButtonDown += (s, e) =>
                         {
-                            Color colorAnt;
+                           
+                            System.Drawing.Color colorAnt;
                             ColorDialog pickColor;
                             Image imgColorToChange = (Image)s;
-                            colorAnt = (Color)imgColorToChange.Tag;
+                            ColorPos colorPos= (ColorPos)imgColorToChange.Tag;
+                            colorAnt = colorPos.Color;
                             pickColor= new ColorDialog();
                             pickColor.ShowDialog();
-                            imgColorToChange.Tag = pickColor.SelectedColor;
+                            colors[colorPos.Posicion] = System.Drawing.Color.FromArgb(pickColor.SelectedColor.A, pickColor.SelectedColor.R, pickColor.SelectedColor.G, pickColor.SelectedColor.B);
+                            imgColorToChange.Tag = new ColorPos(colors[colorPos.Posicion],colorPos.Posicion);
                             imgColorToChange.SetImage(pickColor.SelectedColor.ToBitmap(10, 10));
                             //actualizo el color
                             if (ColorChanged != null)
-                                ColorChanged(this, new ColorChangedArgs(colorAnt,(Color) imgColorToChange.Tag));
+                                ColorChanged(this, new ColorChangedArgs(colorAnt,((ColorPos) imgColorToChange.Tag).Color, ((ColorPos)imgColorToChange.Tag).Posicion));
                         };
-                        imgColor.SetImage(colors[i].ToBitmap(10,10));
-                        imgColor.Tag = colors[i];
+                        imgColor.SetImage( System.Windows.Media.Color.FromArgb(colors[i].A, colors[i].R, colors[i].G, colors[i].B).ToBitmap(10,10));
+                        imgColor.Tag =new ColorPos(colors[i],i);
                         ugColors.Children.Add(imgColor);
                     }
                 }
@@ -73,36 +80,57 @@ namespace Gabriel.Cat.Wpf
             }
         }
     }
-
+    public class ColorPos
+    {
+        public System.Drawing.Color Color;
+        public int Posicion;
+        public ColorPos(System.Drawing.Color color ,int pos)
+        {
+            this.Color = color;
+            this.Posicion = pos;
+        }
+    }
     public class ColorChangedArgs:EventArgs
     {
-        Color colorAnt;
-        Color colorAct;
-        public ColorChangedArgs(Color colorAnt,Color colorAct)
+        System.Drawing.Color colorAnt;
+        System.Drawing.Color colorAct;
+        int pos;
+        public ColorChangedArgs(System.Drawing.Color colorAnt, System.Drawing.Color colorAct,int pos)
         {
             this.colorAnt = colorAnt;
             this.colorAct = colorAct;
+            this.pos = pos;
 
        }
-        public Color ColorAnt{
+        public int Posicion
+        {
+            get { return pos; }
+        }
+        public System.Drawing.Color ColorAnt{
             get { return colorAnt; }
             }
-        public Color ColorAct
+        public System.Drawing.Color ColorAct
         {
             get { return colorAct; }
         }
     }
     public class ColorSelectedArgs : EventArgs
     {
-        Color color;
-        public ColorSelectedArgs(Color color)
+        System.Drawing.Color color;
+        int pos;
+        public ColorSelectedArgs(System.Drawing.Color color,int pos)
         {
             this.color = color;
+            this.pos = pos;
 
         }
-        public Color Color
+        public System.Drawing.Color Color
         {
             get { return color; }
+        }
+        public int Posicion
+        {
+            get { return pos; }
         }
     }
 }
