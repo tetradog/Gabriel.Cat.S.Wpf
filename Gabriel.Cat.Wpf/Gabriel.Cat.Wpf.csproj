@@ -70,6 +70,11 @@
     <Compile Include="ColorListBox.xaml.cs">
       <DependentUpon>ColorListBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ColorTable.xaml.cs">
+      <DependentUpon>ColorTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ControlesDeInternet\ColorPicker\ColorDialog.xaml.cs" />
+    <Compile Include="ControlesDeInternet\ColorPicker\ColorPicker.xaml.cs" />
     <Compile Include="ExtensionWpf.cs" />
     <Compile Include="ObjViewer.xaml.cs">
       <DependentUpon>ObjViewer.xaml</DependentUpon>
@@ -93,6 +98,18 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="ColorListBox.xaml" />
+    <Page Include="ColorTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ControlesDeInternet\ColorPicker\ColorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ControlesDeInternet\ColorPicker\ColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ObjViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -559,6 +576,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ImgsRicoTextBox\marcador.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorSwatchCircle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorSwatchSquare1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorSwatchSquare2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
