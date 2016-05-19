@@ -34,9 +34,9 @@ namespace WPFColorPickerLib
     {
         #region Data
 
-        private DrawingAttributes drawingAttributes = new DrawingAttributes();
-        private Color selectedColor = Colors.Transparent;
-        private Boolean IsMouseDown = false;
+        DrawingAttributes drawingAttributes;
+        Color selectedColor;
+        Boolean isMouseDown;
         ImagePointerLocated imagenActual;
         #endregion
 
@@ -46,8 +46,9 @@ namespace WPFColorPickerLib
         /// Default constructor that initializes the ColorPicker to Black.
         /// </summary>
         public ColorPicker()
-          : this(Colors.Black)
-        { }
+            : this(Colors.Black)
+        {
+        }
 
         /// <summary>
         /// Constructor that initializes to ColorPicker to the specified color.
@@ -55,15 +56,20 @@ namespace WPFColorPickerLib
         /// <param name="initialColor"></param>
         public ColorPicker(Color initialColor)
         {
+            drawingAttributes = new DrawingAttributes();
             InitializeComponent();
-            this.selectedColor = initialColor;
+            isMouseDown = false;
             this.ColorImage.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
             this.ImgCircle1.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchCircle);
             this.ImgCircle1.Tag = new ImagePointerLocated(this.ImgCircle1);
             this.ImgSqaure1.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
-            this.ImgSqaure1.Tag = new ImagePointerLocated(this.ImgSqaure1);
+            imagenActual = new ImagePointerLocated(this.ImgSqaure1);
+            this.ImgSqaure1.Tag = imagenActual;
             this.ImgSqaure2.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare2);
             this.ImgSqaure2.Tag = new ImagePointerLocated(this.ImgSqaure2);
+
+            this.SelectedColor = initialColor;
+
         }
 
         #endregion
@@ -76,7 +82,7 @@ namespace WPFColorPickerLib
         public Color SelectedColor
         {
             get { return selectedColor; }
-            private set
+            set
             {
                 if (selectedColor != value)
                 {
@@ -85,21 +91,8 @@ namespace WPFColorPickerLib
                     UpdateTextBoxes();
                     UpdateInk();
 
-                }
-            }
-        }
 
-        /// <summary>
-        /// Sets the initial Selected Color.
-        /// </summary>
-        public Color InitialColor
-        {
-            set
-            {
-                SelectedColor = value;
-                CreateAlphaLinearBrush();
-                AlphaSlider.Value = value.A;
-                UpdateCursorEllipse(value);
+                }
             }
         }
 
@@ -129,7 +122,8 @@ namespace WPFColorPickerLib
         /// </summary>
         private void CanvasImage_MouseMove(object sender, MouseEventArgs e)
         {
-            if (IsMouseDown) UpdateColor();
+            if (isMouseDown)
+                UpdateColor();
         }
 
         /// <summary>
@@ -137,7 +131,7 @@ namespace WPFColorPickerLib
         /// </summary>
         private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            IsMouseDown = true;
+            isMouseDown = true;
             UpdateColor();
         }
 
@@ -146,8 +140,7 @@ namespace WPFColorPickerLib
         /// </summary>
         private void CanvasImage_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            IsMouseDown = false;
-            //UpdateColor();
+            isMouseDown = false;
         }
 
         /// <summary>
@@ -158,7 +151,7 @@ namespace WPFColorPickerLib
             Image img = (sender as Image);
             ColorImage.Source = img.Source;
             imagenActual = img.Tag as ImagePointerLocated;
-            UpdateCursorEllipse(SelectedColor);
+
         }
 
         #endregion // Control Events
@@ -181,58 +174,40 @@ namespace WPFColorPickerLib
         /// </summary>
         private void UpdateColor()
         {
-
-            // Test to ensure we do not get bad mouse positions along the edges
-            int imageX = (int)Mouse.GetPosition(canvasImage).X;
-            int imageY = (int)Mouse.GetPosition(canvasImage).Y;
-            bool actualizar = !((imageX < 0) || (imageY < 0) || (imageX > ColorImage.Width - 1) || (imageY > ColorImage.Height - 1));
-
-            // Get the single pixel under the mouse into a bitmap and copy it to a byte array
-            CroppedBitmap cb;
-            byte[] pixels;
-            if (actualizar)
+            if (ColorImage.Source != null)
             {
-                cb = new CroppedBitmap(ColorImage.Source as BitmapSource, new Int32Rect(imageX, imageY, 1, 1));
-                pixels = new byte[4];
-                cb.CopyPixels(pixels, 4, 0);
-                // Update the mouse cursor position and the Selected Color
-                ellipsePixel.SetValue(Canvas.LeftProperty, (double)(Mouse.GetPosition(canvasImage).X - (ellipsePixel.Width / 2.0)));
-                ellipsePixel.SetValue(Canvas.TopProperty, (double)(Mouse.GetPosition(canvasImage).Y - (ellipsePixel.Width / 2.0)));
-                canvasImage.InvalidateVisual();
-                // Set the Selected Color based on the cursor pixel and Alpha Slider value
-                SelectedColor = Color.FromArgb((byte)AlphaSlider.Value, pixels[2], pixels[1], pixels[0]);
+                // Test to ensure we do not get bad mouse positions along the edges
+                Point mouseLocation = Mouse.GetPosition(canvasImage);
+
+                int imageX = (int)mouseLocation.X;
+                int imageY = (int)mouseLocation.Y;
+                bool actualizar = !((imageX < 0) || (imageY < 0) || (imageX > ColorImage.Width - 1) || (imageY > ColorImage.Height - 1));
+
+                // Get the single pixel under the mouse into a bitmap and copy it to a byte array
+
+                if (actualizar)
+                {
+
+                    // Update the mouse cursor position and the Selected Color
+                    // ellipsePixel.SetValue(Canvas.LeftProperty, (double)(Mouse.GetPosition(canvasImage).X - (ellipsePixel.Width / 2.0)));
+                    //ellipsePixel.SetValue(Canvas.TopProperty, (double)(Mouse.GetPosition(canvasImage).Y - (ellipsePixel.Width / 2.0)));
+
+                    // Set the Selected Color based on the cursor pixel and Alpha Slider value
+
+                    SelectedColor = imagenActual.GetColor(new System.Drawing.Point(imageX, imageY)).ToMediaColor();
+
+                }
             }
         }
 
-        /// <summary>
-        /// Update the mouse cursor ellipse position.
-        /// </summary>
-        private void UpdateCursorEllipse(Color searchColor)
-        {
-            Point pointEncontrado;
-            double searchX, searchY;
-            try
-            {
-                // Default to the top left if no match is found
-                 pointEncontrado= imagenActual.GetPoint(searchColor.ToDrawingColor()).ToWindowsPoint();
-                searchX = pointEncontrado.X;
-                searchY = pointEncontrado.Y;
-            }catch
-            {
-                searchX = 0;
-                searchY = 0;
-            }
-                // Update the mouse cursor ellipse position
-                ellipsePixel.SetValue(Canvas.LeftProperty, ((double)searchX - (ellipsePixel.Width / 2.0)));
-                ellipsePixel.SetValue(Canvas.TopProperty, ((double)searchY - (ellipsePixel.Width / 2.0)));
-            
-        }
+
 
         /// <summary>
         /// Update text box values based on the Selected Color.
         /// </summary>
         private void UpdateTextBoxes()
         {
+            EventosTxt(false);
             txtAlpha.Text = SelectedColor.A.ToString();
             txtAlphaHex.Text = SelectedColor.A.ToString("X2");
             txtRed.Text = SelectedColor.R.ToString();
@@ -242,6 +217,7 @@ namespace WPFColorPickerLib
             txtBlue.Text = SelectedColor.B.ToString();
             txtBlueHex.Text = SelectedColor.B.ToString("X2");
             txtAll.Text = String.Format("#{0}{1}{2}{3}", txtAlphaHex.Text, txtRedHex.Text, txtGreenHex.Text, txtBlueHex.Text);
+            EventosTxt(true);
         }
 
         /// <summary>
@@ -261,13 +237,15 @@ namespace WPFColorPickerLib
 
         #endregion // Update Methods
 
-        private void txtAll_TextChanged(object sender, TextChangedEventArgs e)
+        private void txt_TextChanged(object sender, TextChangedEventArgs e)
         {
             const int CARACTERESBYTEMAX = 2;
             const int PARTESCOLORARGB = 4;
             const int CARACTERESBYTESARGB = CARACTERESBYTEMAX * PARTESCOLORARGB;
             TextBox txt = (TextBox)sender;
+
             //valido que los campos Hex esten bien escritos :)
+            //no modificar el texto porque molesta solo dejar poner caracteres validos y en mayus max lenght 2 si es 0 se pone '0' :) solo en ese caso se modifica :D
             switch (txt.Name)
             {
 
@@ -289,17 +267,19 @@ namespace WPFColorPickerLib
 
                     break;
                 case "txtAll":
-                    if (txt.Text[0] == '#')
+                    if (txt.Text == "")
+                        txt.Text = "0";
+                    else if (txt.Text[0] == '#')
                         txt.Text = txt.Text.Remove(0, 1);
-                    e.Handled = !Gabriel.Cat.Hex.ValidaString(txt.Text) && txt.Text.Length > (CARACTERESBYTESARGB);
-                    if (!e.Handled) {
+                    e.Handled = !Gabriel.Cat.Hex.ValidaString(txt.Text) && txt.Text.Length > CARACTERESBYTESARGB;
+                    if (!e.Handled)
+                    {
                         if (txt.Text.Length == 0)
                             txt.Text = "0";
-                        else
-                        {
-                            txt.Text = '#' + txt.Text.ToUpper();
-                            txt.CaretIndex = txt.Text.Length;
-                        }
+
+                        txt.Text = '#' + txt.Text.ToUpper();
+                        txt.CaretIndex = txt.Text.Length;
+
                     }
 
                     break;
@@ -307,62 +287,77 @@ namespace WPFColorPickerLib
 
             }
 
-            if (!e.Handled)//si esta bien escrito valido los otros campos
-            {
+            if (!e.Handled)
+            {//si esta bien escrito valido los otros campos
                 try
                 {
                     switch (txt.Name)
                     {
                         case "txtAlpha":
                             SelectedColor = Color.FromArgb(Convert.ToByte(txt.Text), SelectedColor.R, SelectedColor.G, SelectedColor.B);
-                            txtAlphaHex.Text = (Hex)SelectedColor.A;
                             break;
                         case "txtAlphaHex":
                             SelectedColor = Color.FromArgb((byte)((Hex)txt.Text), SelectedColor.R, SelectedColor.G, SelectedColor.B);
-                            txtAlpha.Text = "" + SelectedColor.A;
                             break;
 
                         case "txtRed":
                             SelectedColor = Color.FromArgb(SelectedColor.A, Convert.ToByte(txt.Text), SelectedColor.G, SelectedColor.B);
-                            txtRedHex.Text = (Hex)SelectedColor.R;
                             break;
                         case "txtRedHex":
                             SelectedColor = Color.FromArgb(SelectedColor.A, (byte)((Hex)txt.Text), SelectedColor.G, SelectedColor.B);
-                            txtRed.Text = "" + SelectedColor.R;
+
                             break;
 
                         case "txtGreen":
                             SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, Convert.ToByte(txt.Text), SelectedColor.B);
-                            txtGreenHex.Text = (Hex)SelectedColor.G;
                             break;
                         case "txtGreenHex":
                             SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, (byte)((Hex)txt.Text), SelectedColor.B);
-                            txtGreen.Text = "" + SelectedColor.G;
                             break;
 
                         case "txtBlue":
                             SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, Convert.ToByte(txt.Text));
-                            txtBlueHex.Text = (Hex)SelectedColor.B;
+
                             break;
                         case "txtBlueHex":
                             SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, (byte)((Hex)txt.Text));
-                            txtBlue.Text = "" + SelectedColor.B;
+
                             break;
                         case "txtAll":
                             SelectedColor = Serializar.ToColor(Serializar.GetBytes((int)(Hex)txtAll.Text)).ToMediaColor();
-                            txtAlphaHex.Text = (Hex)SelectedColor.A;
-                            txtAlpha.Text = "" + SelectedColor.A;
-                            txtRedHex.Text = (Hex)SelectedColor.R;
-                            txtRed.Text = "" + SelectedColor.R;
-                            txtGreenHex.Text = (Hex)SelectedColor.G;
-                            txtGreen.Text = "" + SelectedColor.G;
-                            txtBlueHex.Text = (Hex)SelectedColor.B;
-                            txtBlue.Text = "" + SelectedColor.B;
                             break;
                     }
-                }catch { e.Handled = true; }//si peta en el convert To Byte es que se han pasado con el numero!
+                }
+                catch
+                {
+                    e.Handled = true;
+                }//si peta en el convert To Byte es que se han pasado con el numero!
             }
+   
+
         }
+
+        private void EventosTxt(bool poner)
+        {
+            TextBox[] txts = {
+                txtAll,
+                txtAlpha,
+                txtAlphaHex,
+                txtBlue,
+                txtBlueHex,
+                txtGreen,
+                txtGreenHex,
+                txtRed,
+                txtRedHex
+            };
+            for (int i = 0; i < txts.Length; i++)
+                if (poner)
+                    txts[i].TextChanged += txt_TextChanged;
+                else
+                    txts[i].TextChanged -= txt_TextChanged;
+        }
+
+
     }
 
 }
