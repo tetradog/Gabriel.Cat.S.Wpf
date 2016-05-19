@@ -46,11 +46,8 @@ namespace WPFColorPickerLib
 		/// <summary>
 		/// Gets/sets the ColorDialog color.
 		/// </summary>
-		public Color SelectedColor {
-			get { return colorPicker.SelectedColor; }
-			set { colorPicker.SelectedColor = value; }
-		}
-
+        public ColorPicker ColorPicker
+        { get { return colorPicker; } }
 		#endregion
 
 		#region Event Handlers

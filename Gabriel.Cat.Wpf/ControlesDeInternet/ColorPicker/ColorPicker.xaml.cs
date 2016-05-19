@@ -73,7 +73,42 @@ namespace WPFColorPickerLib
         }
 
         #endregion
+        public System.Drawing.Bitmap Imagen1
+        {
+            get { return this.ImgCircle1.ToBitmap(); }
+            set
+            {
+                ChangeImage(ImgCircle1, value);
+            }
+        }
+        public System.Drawing.Bitmap Imagen2
+        {
+            get { return this.ImgSqaure1.ToBitmap(); }
+            set
+            {
+                ChangeImage(ImgSqaure1, value);
+            }
+        }
 
+        public System.Drawing.Bitmap Imagen3
+        {
+            get { return this.ImgCircle1.ToBitmap(); }
+            set
+            {
+                ChangeImage(ImgSqaure2, value);
+            }
+        }
+        private void ChangeImage(Image img, System.Drawing.Bitmap bmp)
+        {
+            img.IsEnabled = bmp != null;
+            if (img.IsEnabled)
+            {
+                img.SetImage(bmp);
+                ImgSqaure1.IsEnabled = true;
+                ((ImagePointerLocated)img.Tag).Bmp = bmp;
+            }
+            else { img.SetImage(Colors.Black.ToBitmap(10, 10)); img.Tag = new ImagePointerLocated(img); }
+        }
         #region Public Properties
 
         /// <summary>
@@ -95,7 +130,34 @@ namespace WPFColorPickerLib
                 }
             }
         }
+        public bool IsAlfaEnabled
+        {
+            get { return this.AlphaSlider.IsEnabled; }
+            set {
+                this.AlphaSlider.IsEnabled = value;
+                this.txtAlpha.IsReadOnly =! value;
+                this.txtAlphaHex.IsReadOnly = !value;
+            }
+        }
 
+        public bool IsTextReadOnly {
+            get { return txtBlue.IsReadOnly; }
+            set
+            {
+                if(IsAlfaEnabled)
+                {
+                    txtAlpha.IsReadOnly = value;
+                    txtAlphaHex.IsReadOnly = value;
+                }
+                //el txtAll me lo salto de momento porque no esta del todo desarrollado
+                txtBlue.IsReadOnly = value;
+                txtBlueHex.IsReadOnly = value;
+                txtGreen.IsReadOnly = value;
+                txtGreenHex.IsReadOnly = value;
+                txtRed.IsReadOnly = value;
+                txtRedHex.IsReadOnly = value;
+            }
+        }
         #endregion
 
         #region Control Events
