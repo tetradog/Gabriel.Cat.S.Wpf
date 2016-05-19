@@ -80,6 +80,7 @@ namespace WPFColorPickerLib
                     CreateAlphaLinearBrush();
                     UpdateTextBoxes();
                     UpdateInk();
+                    
                 }
             }
         }
