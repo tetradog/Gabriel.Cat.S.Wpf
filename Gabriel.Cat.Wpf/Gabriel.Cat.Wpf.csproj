@@ -34,6 +34,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Gabriel.Cat.Utilitats">
       <HintPath>..\..\Gabriel.Cat.Utilitats\Gabriel.Cat.Utilitats\bin\Release\Gabriel.Cat.Utilitats.dll</HintPath>
@@ -79,6 +83,7 @@
     <Compile Include="ControlesDeInternet\ColorPicker\ColorDialog.xaml.cs" />
     <Compile Include="ControlesDeInternet\ColorPicker\ColorPicker.xaml.cs" />
     <Compile Include="ExtensionWpf.cs" />
+    <Compile Include="ImagePointerLocated.cs" />
     <Compile Include="ObjViewer.xaml.cs">
       <DependentUpon>ObjViewer.xaml</DependentUpon>
     </Compile>

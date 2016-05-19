@@ -190,6 +190,26 @@ namespace Gabriel.Cat.Extension
                 coleccion.Insert(newPosition, elementColection);
             }
         }
+        #region Color
+        public static System.Windows.Media.Color ToMediaColor(this System.Drawing.Color color)
+        {
+            return System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
+        }
+        public static System.Drawing.Color ToDrawingColor(this System.Windows.Media.Color color)
+        {
+            return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+        }
+        #endregion
+        #region Point
+        public static System.Windows.Point ToWindowsPoint(this System.Drawing.Point point)
+        {
+            return new System.Windows.Point(point.X,point.Y);
+        }
+        public static System.Drawing.Point ToDrawingPoint(this System.Windows.Point point)
+        {
+            return new  System.Drawing.Point(Convert.ToInt32(point.X),Convert.ToInt32(point.Y));
+        }
+        #endregion
         #region RichTextBox
 
         public static void UndeLineSelection(this RichTextBox rtBox)

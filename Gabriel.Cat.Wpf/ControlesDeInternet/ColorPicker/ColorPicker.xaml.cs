@@ -6,6 +6,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Gabriel.Cat.Extension;
+using Gabriel.Cat;
+using Gabriel.Cat.Wpf;
 //sacado de http://www.codeproject.com/Articles/33001/WPF-A-Simple-Color-Picker-With-Preview
 namespace WPFColorPickerLib
 {
@@ -35,7 +37,7 @@ namespace WPFColorPickerLib
         private DrawingAttributes drawingAttributes = new DrawingAttributes();
         private Color selectedColor = Colors.Transparent;
         private Boolean IsMouseDown = false;
-
+        ImagePointerLocated imagenActual;
         #endregion
 
         #region Constructors
@@ -57,9 +59,11 @@ namespace WPFColorPickerLib
             this.selectedColor = initialColor;
             this.ColorImage.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
             this.ImgCircle1.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchCircle);
+            this.ImgCircle1.Tag = new ImagePointerLocated(this.ImgCircle1);
             this.ImgSqaure1.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
+            this.ImgSqaure1.Tag = new ImagePointerLocated(this.ImgSqaure1);
             this.ImgSqaure2.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare2);
-        
+            this.ImgSqaure2.Tag = new ImagePointerLocated(this.ImgSqaure2);
         }
 
         #endregion
@@ -80,7 +84,7 @@ namespace WPFColorPickerLib
                     CreateAlphaLinearBrush();
                     UpdateTextBoxes();
                     UpdateInk();
-                    
+
                 }
             }
         }
@@ -153,6 +157,7 @@ namespace WPFColorPickerLib
         {
             Image img = (sender as Image);
             ColorImage.Source = img.Source;
+            imagenActual = img.Tag as ImagePointerLocated;
             UpdateCursorEllipse(SelectedColor);
         }
 
@@ -176,15 +181,19 @@ namespace WPFColorPickerLib
         /// </summary>
         private void UpdateColor()
         {
-            if (ColorImage.Source != null)
+
+            // Test to ensure we do not get bad mouse positions along the edges
+            int imageX = (int)Mouse.GetPosition(canvasImage).X;
+            int imageY = (int)Mouse.GetPosition(canvasImage).Y;
+            bool actualizar = !((imageX < 0) || (imageY < 0) || (imageX > ColorImage.Width - 1) || (imageY > ColorImage.Height - 1));
+
+            // Get the single pixel under the mouse into a bitmap and copy it to a byte array
+            CroppedBitmap cb;
+            byte[] pixels;
+            if (actualizar)
             {
-                // Test to ensure we do not get bad mouse positions along the edges
-                int imageX = (int)Mouse.GetPosition(canvasImage).X;
-                int imageY = (int)Mouse.GetPosition(canvasImage).Y;
-                if ((imageX < 0) || (imageY < 0) || (imageX > ColorImage.Width - 1) || (imageY > ColorImage.Height - 1)) return;
-                // Get the single pixel under the mouse into a bitmap and copy it to a byte array
-                CroppedBitmap cb = new CroppedBitmap(ColorImage.Source as BitmapSource, new Int32Rect(imageX, imageY, 1, 1));
-                byte[] pixels = new byte[4];
+                cb = new CroppedBitmap(ColorImage.Source as BitmapSource, new Int32Rect(imageX, imageY, 1, 1));
+                pixels = new byte[4];
                 cb.CopyPixels(pixels, 4, 0);
                 // Update the mouse cursor position and the Selected Color
                 ellipsePixel.SetValue(Canvas.LeftProperty, (double)(Mouse.GetPosition(canvasImage).X - (ellipsePixel.Width / 2.0)));
@@ -200,42 +209,23 @@ namespace WPFColorPickerLib
         /// </summary>
         private void UpdateCursorEllipse(Color searchColor)
         {
-            if (ColorImage.Source != null)
+            Point pointEncontrado;
+            double searchX, searchY;
+            try
             {
-                // Scan the canvas image for a color which matches the search color
-                BitmapSource source = ColorImage.Source as BitmapSource;
-                System.Drawing.Bitmap bmp = source.ToBitmap();
-                Color tempColor = new Color();
-                byte[] pixels = new byte[4];
-                int searchY = 0;
-                int pos;
-                int searchX = 0;
-                bool encontrado = false;
-                searchColor.A = 255;
-                unsafe{
-                    bmp.TrataBytes((MetodoTratarBytePointer)((bytesImg) =>
-                    {
-                        for (searchY = 0, pos = 0; searchY <= canvasImage.Width - 1 && !encontrado; searchY++)
-                        {
-                            for (searchX = 0; searchX <= canvasImage.Height - 1 && !encontrado; searchX++, pos += 3)
-                            {
-                                tempColor = Color.FromArgb(255, bytesImg[pos + 2], bytesImg[pos + 1], bytesImg[pos]);
-                                if (tempColor == searchColor) encontrado = true;
-                            }
-                            if (tempColor == searchColor) encontrado = true;
-                        }
-                    }));
-                }
                 // Default to the top left if no match is found
-                if (tempColor != searchColor)
-                {
-                    searchX = 0;
-                    searchY = 0;
-                }
+                 pointEncontrado= imagenActual.GetPoint(searchColor.ToDrawingColor()).ToWindowsPoint();
+                searchX = pointEncontrado.X;
+                searchY = pointEncontrado.Y;
+            }catch
+            {
+                searchX = 0;
+                searchY = 0;
+            }
                 // Update the mouse cursor ellipse position
                 ellipsePixel.SetValue(Canvas.LeftProperty, ((double)searchX - (ellipsePixel.Width / 2.0)));
                 ellipsePixel.SetValue(Canvas.TopProperty, ((double)searchY - (ellipsePixel.Width / 2.0)));
-            }
+            
         }
 
         /// <summary>
@@ -263,13 +253,116 @@ namespace WPFColorPickerLib
             drawingAttributes.StylusTip = StylusTip.Ellipse;
             drawingAttributes.Width = 5;
             // Update drawing attributes on previewPresenter
-            foreach (Stroke s in previewPresenter.Strokes)
+            for (int i = 0; i < previewPresenter.Strokes.Count; i++)
             {
-                s.DrawingAttributes = drawingAttributes;
+                previewPresenter.Strokes[i].DrawingAttributes = drawingAttributes;
             }
         }
 
         #endregion // Update Methods
 
+        private void txtAll_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            const int CARACTERESBYTEMAX = 2;
+            const int PARTESCOLORARGB = 4;
+            const int CARACTERESBYTESARGB = CARACTERESBYTEMAX * PARTESCOLORARGB;
+            TextBox txt = (TextBox)sender;
+            //valido que los campos Hex esten bien escritos :)
+            switch (txt.Name)
+            {
+
+                case "txtRedHex":
+                case "txtGreenHex":
+                case "txtBlueHex":
+                case "txtAlphaHex":
+                    e.Handled = !Gabriel.Cat.Hex.ValidaString(txt.Text) && txt.Text.Length > CARACTERESBYTEMAX;
+                    if (!e.Handled)
+                    {
+                        if (txt.Text.Length == 0)
+                            txt.Text = "0";
+                        else
+                        {
+                            txt.Text = txt.Text.ToUpper();
+                            txt.CaretIndex = txt.Text.Length;
+                        }
+                    }
+
+                    break;
+                case "txtAll":
+                    if (txt.Text[0] == '#')
+                        txt.Text = txt.Text.Remove(0, 1);
+                    e.Handled = !Gabriel.Cat.Hex.ValidaString(txt.Text) && txt.Text.Length > (CARACTERESBYTESARGB);
+                    if (!e.Handled) {
+                        if (txt.Text.Length == 0)
+                            txt.Text = "0";
+                        else
+                        {
+                            txt.Text = '#' + txt.Text.ToUpper();
+                            txt.CaretIndex = txt.Text.Length;
+                        }
+                    }
+
+                    break;
+
+
+            }
+
+            if (!e.Handled)//si esta bien escrito valido los otros campos
+            {
+                try
+                {
+                    switch (txt.Name)
+                    {
+                        case "txtAlpha":
+                            SelectedColor = Color.FromArgb(Convert.ToByte(txt.Text), SelectedColor.R, SelectedColor.G, SelectedColor.B);
+                            txtAlphaHex.Text = (Hex)SelectedColor.A;
+                            break;
+                        case "txtAlphaHex":
+                            SelectedColor = Color.FromArgb((byte)((Hex)txt.Text), SelectedColor.R, SelectedColor.G, SelectedColor.B);
+                            txtAlpha.Text = "" + SelectedColor.A;
+                            break;
+
+                        case "txtRed":
+                            SelectedColor = Color.FromArgb(SelectedColor.A, Convert.ToByte(txt.Text), SelectedColor.G, SelectedColor.B);
+                            txtRedHex.Text = (Hex)SelectedColor.R;
+                            break;
+                        case "txtRedHex":
+                            SelectedColor = Color.FromArgb(SelectedColor.A, (byte)((Hex)txt.Text), SelectedColor.G, SelectedColor.B);
+                            txtRed.Text = "" + SelectedColor.R;
+                            break;
+
+                        case "txtGreen":
+                            SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, Convert.ToByte(txt.Text), SelectedColor.B);
+                            txtGreenHex.Text = (Hex)SelectedColor.G;
+                            break;
+                        case "txtGreenHex":
+                            SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, (byte)((Hex)txt.Text), SelectedColor.B);
+                            txtGreen.Text = "" + SelectedColor.G;
+                            break;
+
+                        case "txtBlue":
+                            SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, Convert.ToByte(txt.Text));
+                            txtBlueHex.Text = (Hex)SelectedColor.B;
+                            break;
+                        case "txtBlueHex":
+                            SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, (byte)((Hex)txt.Text));
+                            txtBlue.Text = "" + SelectedColor.B;
+                            break;
+                        case "txtAll":
+                            SelectedColor = Serializar.ToColor(Serializar.GetBytes((int)(Hex)txtAll.Text)).ToMediaColor();
+                            txtAlphaHex.Text = (Hex)SelectedColor.A;
+                            txtAlpha.Text = "" + SelectedColor.A;
+                            txtRedHex.Text = (Hex)SelectedColor.R;
+                            txtRed.Text = "" + SelectedColor.R;
+                            txtGreenHex.Text = (Hex)SelectedColor.G;
+                            txtGreen.Text = "" + SelectedColor.G;
+                            txtBlueHex.Text = (Hex)SelectedColor.B;
+                            txtBlue.Text = "" + SelectedColor.B;
+                            break;
+                    }
+                }catch { e.Handled = true; }//si peta en el convert To Byte es que se han pasado con el numero!
+            }
+        }
     }
+
 }
