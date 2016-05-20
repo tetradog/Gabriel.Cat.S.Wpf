@@ -3,32 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
        xmlns:local="clr-namespace:WPFColorPickerLib"
         Title="Pick Color"
-        Height="410"
-        Width="520"
-        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" ResizeMode="CanResizeWithGrip" ShowActivated="False" MinHeight="410" MinWidth="520">
+        Height="386.771"
+        Width="514.192"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" ResizeMode="CanMinimize" ShowActivated="False">
 
-    <Grid>
+    <Grid Margin="0,0,-6,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="392*"/>
+            <ColumnDefinition Width="149*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
+
         </Grid.RowDefinitions>
 
         <local:ColorPicker x:Name="colorPicker"
-                       Margin="-6,1,-7,11"
+                       Margin="-8,6,23,21"
                        Grid.Row="0"
-                       TabIndex="2"/>
+                       TabIndex="2" Grid.ColumnSpan="2"/>
 
-        <StackPanel Grid.Row="1"
+        <StackPanel
                 HorizontalAlignment="Right"
                 Orientation="Horizontal"
-                Margin="5" >
+                Margin="0,301,47,11" Grid.ColumnSpan="2" >
             <Button x:Name="btnOK"
               Content="OK"
               Click="btnOK_Click"
               IsDefault="True"
               Width="60"
               Height="25"
-              Margin="10,0,0,0"
+              Margin="10,9,0,9"
               TabIndex="0"/>
             <Button x:Name="btnCancel"
               Content="Cancel"

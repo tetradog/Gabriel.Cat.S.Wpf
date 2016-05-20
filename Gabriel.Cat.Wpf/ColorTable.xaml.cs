@@ -27,13 +27,13 @@ namespace Gabriel.Cat.Wpf
         System.Drawing.Color[] colors;
         private bool isAlfaSuported;
         private bool isTextReadOnly;
-        ColorDialog pickColor;
+        ColorDialog colorDialog;
         public ColorTable():this(new System.Drawing.Color[] { }) { }
         public ColorTable(params System.Drawing.Color[] colors)
         {
             InitializeComponent();
             Colors = colors;
-            pickColor = new ColorDialog();
+            colorDialog = new ColorDialog();
         }
         public System.Drawing.Color[] Colors
         {
@@ -65,13 +65,13 @@ namespace Gabriel.Cat.Wpf
                             Image imgColorToChange = (Image)s;
                             ColorPos colorPos= (ColorPos)imgColorToChange.Tag;
                             colorAnt = colorPos.Color;
-                            pickColor.ColorPicker.SelectedColor =Color.FromArgb(colorPos.Color.A, colorPos.Color.R, colorPos.Color.G, colorPos.Color.B);
-                            pickColor.ShowDialog();
-                            if (pickColor.DialogResult.Value)
+                            colorDialog.ColorPicker.SelectedColor =Color.FromArgb(colorPos.Color.A, colorPos.Color.R, colorPos.Color.G, colorPos.Color.B);
+                            colorDialog.ShowDialog();
+                            if (colorDialog.DialogResult.Value)
                             {
-                                colors[colorPos.Posicion] = System.Drawing.Color.FromArgb(pickColor.ColorPicker.SelectedColor.A, pickColor.ColorPicker.SelectedColor.R, pickColor.ColorPicker.SelectedColor.G, pickColor.ColorPicker.SelectedColor.B);
+                                colors[colorPos.Posicion] = System.Drawing.Color.FromArgb(colorDialog.ColorPicker.SelectedColor.A, colorDialog.ColorPicker.SelectedColor.R, colorDialog.ColorPicker.SelectedColor.G, colorDialog.ColorPicker.SelectedColor.B);
                                 imgColorToChange.Tag = new ColorPos(colors[colorPos.Posicion], colorPos.Posicion);
-                                imgColorToChange.SetImage(pickColor.ColorPicker.SelectedColor.ToBitmap(10, 10));
+                                imgColorToChange.SetImage(colorDialog.ColorPicker.SelectedColor.ToBitmap(10, 10));
                                 //actualizo el color
                                 if (ColorChanged != null)
                                     ColorChanged(this, new ColorChangedArgs(colorAnt, ((ColorPos)imgColorToChange.Tag).Color, ((ColorPos)imgColorToChange.Tag).Posicion));
@@ -86,9 +86,9 @@ namespace Gabriel.Cat.Wpf
                     throw new ArgumentException();
             }
         }
-        public ColorDialog ColorDialog
+        public ColorPicker ColorPicker
         {
-            get { return pickColor; }
+            get { return colorDialog.ColorPicker; }
         }
     }
     public class ColorPos
