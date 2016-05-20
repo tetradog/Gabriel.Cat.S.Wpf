@@ -2,46 +2,40 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
        xmlns:local="clr-namespace:WPFColorPickerLib"
-        Title="Pick Color"
-        Height="386.771"
-        Width="514.192"
-        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" ResizeMode="CanMinimize" ShowActivated="False">
+        Height="388.962"
+        Width="484.609"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" ResizeMode="CanMinimize" ShowActivated="False" Closing="Window_Closing">
 
-    <Grid Margin="0,0,-6,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="392*"/>
-            <ColumnDefinition Width="149*"/>
-        </Grid.ColumnDefinitions>
+    <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-
+            <RowDefinition Height="331*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
 
-        <local:ColorPicker x:Name="colorPicker"
-                       Margin="-8,6,23,21"
+        <local:ColorPicker x:Name="colorPicker"                       
                        Grid.Row="0"
-                       TabIndex="2" Grid.ColumnSpan="2"/>
+                       TabIndex="2" Margin="-2,0,0,27" Grid.RowSpan="2"/>
 
-        <StackPanel
-                HorizontalAlignment="Right"
-                Orientation="Horizontal"
-                Margin="0,301,47,11" Grid.ColumnSpan="2" >
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="128*"/>
+                <ColumnDefinition Width="48*"/>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="15*"/>
+            </Grid.ColumnDefinitions>
             <Button x:Name="btnOK"
               Content="OK"
               Click="btnOK_Click"
               IsDefault="True"
-              Width="60"
-              Height="25"
-              Margin="10,9,0,9"
-              TabIndex="0"/>
+              TabIndex="0" Grid.Column="1"  />
+            <Grid Margin="75,0"/>
             <Button x:Name="btnCancel"
               Content="Cancel"
               Click="btnCancel_Click"
               IsCancel="True"
-              Height="25"
-              Width="60"
-              Margin="10,0,10,0"
-              TabIndex="1"/>
-        </StackPanel>
+              TabIndex="1" Grid.Column="3" />
+        </Grid>
     </Grid>
 </Window>

@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="WPFColorPickerLib.ColorPicker"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Height="328" Width="525" MinHeight="305" MinWidth="482">
+    Height="328" Width="476.408" MinHeight="305" MinWidth="482">
   <UserControl.Resources>
     <DrawingBrush x:Key="CheckerboardBrush"
         Stretch="None" TileMode="Tile" AlignmentX="Left" AlignmentY="Top"
@@ -38,7 +38,7 @@
     <StackPanel Grid.Row="0" Height="35"
                     HorizontalAlignment="Stretch" Orientation="Horizontal"
                     Background="Black">
-      <Label Content="Pick swatch type" Foreground="White" FontWeight="Bold"
+      <Label Content="Elige Selector Color" Foreground="White" FontWeight="Bold"
                    VerticalAlignment="Center"/>
       <Image x:Name="ImgSqaure1" Height="20" Width="20"
                     Margin="45,0,0,0"
@@ -97,7 +97,7 @@
 
       <!-- Preview, Column 1-->
       <StackPanel Grid.Column="1" Orientation="Vertical" Grid.ColumnSpan="2" Margin="0,0,169,0" MouseDown="CanvasImage_MouseDown" MouseUp="CanvasImage_MouseUp">
-        <Label Content="Preview" Margin="5,0,0,0" HorizontalAlignment="Left"
+        <Label Content="Color Seleccionado" Margin="5,0,0,0" HorizontalAlignment="Left"
                        Foreground="Black" FontWeight="Bold" VerticalAlignment="Center"/>
 
         <Border Margin="4,5,10,0" Width="154" Height="154"

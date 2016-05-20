@@ -67,7 +67,7 @@ namespace Gabriel.Cat.Wpf
                             colorAnt = colorPos.Color;
                             colorDialog.ColorPicker.SelectedColor =Color.FromArgb(colorPos.Color.A, colorPos.Color.R, colorPos.Color.G, colorPos.Color.B);
                             colorDialog.ShowDialog();
-                            if (colorDialog.DialogResult.Value)
+                            if (!colorDialog.EstaCancelado)
                             {
                                 colors[colorPos.Posicion] = System.Drawing.Color.FromArgb(colorDialog.ColorPicker.SelectedColor.A, colorDialog.ColorPicker.SelectedColor.R, colorDialog.ColorPicker.SelectedColor.G, colorDialog.ColorPicker.SelectedColor.B);
                                 imgColorToChange.Tag = new ColorPos(colors[colorPos.Posicion], colorPos.Posicion);

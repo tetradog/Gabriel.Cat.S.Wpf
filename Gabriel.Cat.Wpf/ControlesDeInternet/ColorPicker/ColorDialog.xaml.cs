@@ -17,7 +17,7 @@ namespace WPFColorPickerLib
 	public partial class ColorDialog : Window
 	{
 		#region Constructors
-
+        public bool EstaCancelado { get; private set; }
 		/// <summary>
 		/// Default constructor initializes to Black.
 		/// </summary>
@@ -57,7 +57,8 @@ namespace WPFColorPickerLib
 		/// </summary>
 		private void btnOK_Click(object sender, RoutedEventArgs e)
 		{
-			DialogResult = true;
+			EstaCancelado = false;
+            this.Hide();
 		}
 
 		/// <summary>
@@ -65,9 +66,17 @@ namespace WPFColorPickerLib
 		/// </summary>
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
 		{
-			DialogResult = false;
+			EstaCancelado = true;
 		}
 
-		#endregion
-	}
+        #endregion
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+            EstaCancelado = true;
+
+        }
+    }
 }
