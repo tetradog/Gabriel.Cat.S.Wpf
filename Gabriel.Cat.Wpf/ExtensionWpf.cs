@@ -68,6 +68,14 @@ namespace Gabriel.Cat.Extension
         //    return dtp.Value.Date;
         //}
         #endregion
+
+        public static Bitmap ToBitmap(this System.Windows.Media.Imaging.GifBitmapEncoder gifEncoder)
+        {
+            Stream str = new MemoryStream();
+            gifEncoder.Save(str);
+            return new Bitmap(str);
+
+        }
         public static Bitmap ToBitmap(this System.Windows.Controls.Image img)
         {
             return img.Source.ToBitmap();
