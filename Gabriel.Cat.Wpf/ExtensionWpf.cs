@@ -37,7 +37,18 @@ namespace Gabriel.Cat.Extension
         {
             return !dispatcher.CheckAccess();
         }
+        #region UIElementCollection
+        public static void WhileEach(this UIElementCollection coleccion, Gabriel.Cat.Extension.MetodoWhileEach<UIElement> metodo)
+        {
+            for (int i = 0; i < coleccion.Count && metodo(coleccion[i]); i++) ;
+        }
+        #endregion
         #region ItemCollection
+
+        public static void WhileEach(this ItemCollection coleccion, Gabriel.Cat.Extension.MetodoWhileEach<object> metodo)
+        {
+            for (int i = 0; i < coleccion.Count && metodo(coleccion.GetItemAt(i)); i++) ;
+        }
         public static void AddRange(this ItemCollection items, IEnumerable list)
         {
             foreach (object obj in list)
@@ -68,7 +79,7 @@ namespace Gabriel.Cat.Extension
         //    return dtp.Value.Date;
         //}
         #endregion
-
+         
         public static Bitmap ToBitmap(this System.Windows.Media.Imaging.GifBitmapEncoder gifEncoder)
         {
             Stream str = new MemoryStream();
