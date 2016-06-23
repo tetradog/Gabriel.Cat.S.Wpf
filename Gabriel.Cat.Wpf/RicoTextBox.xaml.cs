@@ -28,8 +28,12 @@ namespace Gabriel.Cat.Wpf
      
         public RicoTextBox():base()
         {
-            ContextMenu = new RichTextBoxContextMenu(this);
-            TextChanged += (s, o) => TextChangedTimes++;
+            try
+            {
+                ContextMenu = new RichTextBoxContextMenu(this);
+                TextChanged += (s, o) => TextChangedTimes++;
+            }
+            catch { }
         }
         public string Text
         {
