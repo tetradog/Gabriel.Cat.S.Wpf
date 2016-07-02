@@ -37,7 +37,13 @@ namespace Gabriel.Cat.Extension
         {
             return !dispatcher.CheckAccess();
         }
+        
         #region UIElementCollection
+        public static void RemoveRange(this UIElementCollection coleccion,IEnumerable<UIElement> elementosParaQuitar)
+        {
+            foreach (UIElement element in elementosParaQuitar)
+                coleccion.Remove(element);
+        }
         public static void WhileEach(this UIElementCollection coleccion, Gabriel.Cat.Extension.MetodoWhileEach<UIElement> metodo)
         {
             for (int i = 0; i < coleccion.Count && metodo(coleccion[i]); i++) ;

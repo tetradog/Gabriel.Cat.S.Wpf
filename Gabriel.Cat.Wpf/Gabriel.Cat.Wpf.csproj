@@ -39,6 +39,10 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gabriel.Cat.Utilitats, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Gabriel.Cat.Utilitats\Gabriel.Cat.Utilitats\bin\Release\Gabriel.Cat.Utilitats.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -99,6 +103,9 @@
     <Compile Include="SwitchImg.xaml.cs">
       <DependentUpon>SwitchImg.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToggleButton.xaml.cs">
+      <DependentUpon>ToggleButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowSinBordes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SwitchImg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToggleButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,12 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ColorSwatchSquare2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Gabriel.Cat.Utilitats\Gabriel.Cat.Utilitats\Gabriel.Cat.Utilitats.csproj">
-      <Project>{6fdf9bb1-ae07-4820-beee-a2f52cfbe770}</Project>
-      <Name>Gabriel.Cat.Utilitats</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
