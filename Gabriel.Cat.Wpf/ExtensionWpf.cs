@@ -37,7 +37,7 @@ namespace Gabriel.Cat.Extension
         {
             return !dispatcher.CheckAccess();
         }
-        
+
         #region UIElementCollection
         public static void RemoveRange(this UIElementCollection coleccion,IEnumerable<UIElement> elementosParaQuitar)
         {

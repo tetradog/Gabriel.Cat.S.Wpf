@@ -100,6 +100,9 @@
     <Compile Include="RicoTextBox.xaml.cs">
       <DependentUpon>RicoTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SwitchButtonLabel.xaml.cs">
+      <DependentUpon>SwitchButtonLabel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SwitchImg.xaml.cs">
       <DependentUpon>SwitchImg.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RicoTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SwitchButtonLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -181,6 +188,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ColorSwatchSquare2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Botton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BottonL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BottonR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnOffL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnOffR.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

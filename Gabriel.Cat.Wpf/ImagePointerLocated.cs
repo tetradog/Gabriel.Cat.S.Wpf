@@ -12,6 +12,7 @@ namespace Gabriel.Cat.Wpf
     {
         public ImagePointerLocated(System.Windows.Controls.Image img) : base(img.ToBitmap())
         {
+         
         }
     }
 
