@@ -21,40 +21,39 @@ namespace Gabriel.Cat.Wpf
     public partial class SwitchButtonLabel : UserControl
     {
         Brush brushOn,brushOff;
-        bool estaOff;
+        bool estaOn;
         public event EventHandler Changed;
         public SwitchButtonLabel()
         {
-            brushOn = Brushes.LightSalmon;
-            brushOff = Brushes.LightGreen;
+            brushOn = Brushes.LightGreen;
+            brushOff = Brushes.LightSalmon; 
             InitializeComponent();
             gLeftOff.Background = new ImageBrush(Resource1.SwitchBottonOffL.ToImage().Source);
             gRightOff.Background = new ImageBrush(Resource1.SwitchBottonOffR.ToImage().Source);
             gLeft.Background = new ImageBrush(Resource1.SwitchBottonL.ToImage().Source);
             gRight.Background = new ImageBrush(Resource1.SwitchBottonR.ToImage().Source);
-            EstaOff = true;
+            EstaOn = true;
         }
-        public bool EstaOff
+        public bool EstaOn
         {
-            get { return estaOff; }
+            get { return estaOn; }
             set
             {
-                estaOff = value;
-                if (estaOff)
-                {
-                    if (!gRight.IsVisible)
-                    {
-                        gRight.Visibility = Visibility.Visible;
-                        gLeft.Visibility = Visibility.Hidden;
-                        txtLabel.Background = brushOff;
-
-                    }
-                }else
-                {
+                estaOn = value;
+                if (estaOn)
+                {//se tiene que 
                     if (!gLeft.IsVisible)
                     {
                         gLeft.Visibility = Visibility.Visible;
                         gRight.Visibility = Visibility.Hidden;
+                        txtLabel.Background = brushOff;
+                    }
+                }else
+                {//se tiene que encender
+                    if (!gRight.IsVisible)
+                    {
+                        gRight.Visibility = Visibility.Visible;
+                        gLeft.Visibility = Visibility.Hidden;
                         txtLabel.Background = brushOn;
 
                     }
@@ -69,21 +68,21 @@ namespace Gabriel.Cat.Wpf
 
         private void gLeft_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            EstaOff = true;
+            EstaOn = true;
             if (Changed != null)
                 Changed(this, new EventArgs());
         }
 
         private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            EstaOff = !EstaOff;
+            EstaOn = !EstaOn;
             if (Changed != null)
                 Changed(this, new EventArgs());
         }
 
         private void gRight_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            EstaOff = false;
+            EstaOn = false;
             if (Changed != null)
                 Changed(this, new EventArgs());
         }
