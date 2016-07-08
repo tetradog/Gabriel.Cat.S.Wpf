@@ -6,17 +6,6 @@
              xmlns:local="clr-namespace:Gabriel.Cat.Wpf"
              mc:Ignorable="d" 
              Height="20" d:DesignWidth="300" >
-    <Grid >
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Grid x:Name="gLeftOff" Grid.Column="0"/>
-        <Grid x:Name="gLeft" Grid.Column="0" MouseLeftButtonUp="gLeft_MouseLeftButtonUp" />
-        <TextBlock x:Name="txtLabel" Grid.Column="1" MouseLeftButtonUp="Grid_MouseLeftButtonUp"/>
-        <Grid x:Name="gRightOff" Grid.Column="2"/>
-        <Grid x:Name="gRight" Grid.Column="2" MouseLeftButtonUp="gRight_MouseLeftButtonUp" Visibility="Hidden"/>
-        
-    </Grid>
+    <TextBlock x:Name="txtLabel" Grid.Column="1" MouseLeftButtonUp="MouseLeftButtonUp"/>
+   
 </UserControl>

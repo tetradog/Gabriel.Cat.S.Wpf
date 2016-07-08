@@ -28,10 +28,6 @@ namespace Gabriel.Cat.Wpf
             brushOn = Brushes.LightGreen;
             brushOff = Brushes.LightSalmon; 
             InitializeComponent();
-            gLeftOff.Background = new ImageBrush(Resource1.SwitchBottonOffL.ToImage().Source);
-            gRightOff.Background = new ImageBrush(Resource1.SwitchBottonOffR.ToImage().Source);
-            gLeft.Background = new ImageBrush(Resource1.SwitchBottonL.ToImage().Source);
-            gRight.Background = new ImageBrush(Resource1.SwitchBottonR.ToImage().Source);
             EstaOn = true;
         }
         public bool EstaOn
@@ -42,21 +38,15 @@ namespace Gabriel.Cat.Wpf
                 estaOn = value;
                 if (estaOn)
                 {//se tiene que 
-                    if (!gLeft.IsVisible)
-                    {
-                        gLeft.Visibility = Visibility.Visible;
-                        gRight.Visibility = Visibility.Hidden;
+
                         txtLabel.Background = brushOff;
-                    }
+                    
                 }else
                 {//se tiene que encender
-                    if (!gRight.IsVisible)
-                    {
-                        gRight.Visibility = Visibility.Visible;
-                        gLeft.Visibility = Visibility.Hidden;
+                    
                         txtLabel.Background = brushOn;
 
-                    }
+                    
                 }
 
             }
@@ -66,25 +56,41 @@ namespace Gabriel.Cat.Wpf
             get { return txtLabel; }
         }
 
-        private void gLeft_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        public Brush BrushOn
         {
-            EstaOn = true;
-            if (Changed != null)
-                Changed(this, new EventArgs());
+            get
+            {
+                return brushOn;
+            }
+
+            set
+            {
+                brushOn = value;
+                EstaOn = EstaOn;
+            }
         }
 
-        private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        public Brush BrushOff
+        {
+            get
+            {
+                return brushOff;
+            }
+
+            set
+            {
+                brushOff = value;
+                EstaOn = EstaOn;
+            }
+        }
+
+        private void MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             EstaOn = !EstaOn;
             if (Changed != null)
                 Changed(this, new EventArgs());
         }
 
-        private void gRight_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            EstaOn = false;
-            if (Changed != null)
-                Changed(this, new EventArgs());
-        }
+
     }
 }
