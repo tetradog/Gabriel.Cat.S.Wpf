@@ -85,6 +85,12 @@
     <Compile Include="ControlesDeInternet\ColorPicker\ColorPicker.xaml.cs" />
     <Compile Include="ExtensionWpf.cs" />
     <Compile Include="ImagePointerLocated.cs" />
+    <Compile Include="MenuItems.xaml.cs">
+      <DependentUpon>MenuItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemsListAdmin.xaml.cs">
+      <DependentUpon>ItemsListAdmin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ObjViewer.xaml.cs">
       <DependentUpon>ObjViewer.xaml</DependentUpon>
     </Compile>
@@ -124,6 +130,14 @@
     <Page Include="ControlesDeInternet\ColorPicker\ColorPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemsListAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ObjViewer.xaml">
       <SubType>Designer</SubType>
@@ -188,24 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ColorSwatchSquare2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Botton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btnOff.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\BottonL.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\BottonR.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btnOffL.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btnOffR.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
