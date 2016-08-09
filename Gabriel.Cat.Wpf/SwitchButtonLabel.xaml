@@ -6,6 +6,6 @@
              xmlns:local="clr-namespace:Gabriel.Cat.Wpf"
              mc:Ignorable="d" 
              Height="20" d:DesignWidth="300" >
-    <TextBlock x:Name="txtLabel" Grid.Column="1" MouseLeftButtonUp="MouseLeftButtonUp"/>
+    <TextBlock x:Name="txtLabel" MouseLeftButtonUp="MouseLeftButtonUp"/>
    
 </UserControl>
