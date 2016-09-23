@@ -23,11 +23,12 @@ namespace Gabriel.Cat.Wpf
             cambiarHaciendoClick = true;
         }
 
-        public SwitchImg(Bitmap imgOn, Bitmap imgOff):this()
+        public SwitchImg(Bitmap imgOn, Bitmap imgOff,bool estaOn=false):this()
         {
             this.imgOn = imgOn.ToImage().Source;
             this.SetImage(imgOff);
             this.imgOff = Source;
+            this.EstadoOn = estadoOn;
         }
         public bool EstadoOn
         {
