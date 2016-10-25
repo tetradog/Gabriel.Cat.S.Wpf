@@ -36,7 +36,7 @@ namespace Gabriel.Cat.Wpf
         {
             if (bmps != null)
                 for (int i = 0; i < bmps.Length; i++)
-                    ImagenesButton.Afegir(bmps[i].ToImage());
+                    ImagenesButton.Add(bmps[i].ToImage());
             Index = 0;
         }
         public Llista<Image> ImagenesButton

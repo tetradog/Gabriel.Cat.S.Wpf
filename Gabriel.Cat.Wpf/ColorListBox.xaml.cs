@@ -62,10 +62,13 @@ namespace Gabriel.Cat.Wpf
             set
             {
                 onlyOneSelecction = value;
+                if (onlyOneSelecction)
+                    SelectionType = TipoSeleccion.One;
+                else SelectionType = TipoSeleccion.More;
             }
         }
 
-        public TipoSeleccion Tipo
+        public TipoSeleccion SelectionType
         {
             get
             {
@@ -100,12 +103,17 @@ namespace Gabriel.Cat.Wpf
                 { Ordena(); }
             }
         }
+        public ItemColorList this[int pos]
+        {
+            get { return objectes[pos]; }
+            set { objectes[pos] = value; }
+        }
         private void SiNoPulsaControl(object sender, KeyEventArgs e)
         {
             if (KeyCtrModificaTipoSeleccion && pulsaControl)
             {
                 pulsaControl = e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl;
-                Tipo = !pulsaControl ? ColorListBox.TipoSeleccion.More : ColorListBox.TipoSeleccion.One;
+                SelectionType = !pulsaControl ? ColorListBox.TipoSeleccion.More : ColorListBox.TipoSeleccion.One;
             }
         }
 
@@ -114,7 +122,7 @@ namespace Gabriel.Cat.Wpf
             if (KeyCtrModificaTipoSeleccion)
             {
                 pulsaControl = e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl;
-                Tipo = pulsaControl ? ColorListBox.TipoSeleccion.More : ColorListBox.TipoSeleccion.One;
+                SelectionType = pulsaControl ? ColorListBox.TipoSeleccion.More : ColorListBox.TipoSeleccion.One;
             }
         }
 
@@ -176,7 +184,7 @@ namespace Gabriel.Cat.Wpf
             Action act = () =>
          {
              item.HorizontalAlignment = HorizontalAlignment.Left;
-             objectes.Afegir(item);
+             objectes.Add(item);
              stkPanel.Children.Add(item);
              if (Sorted)
                  Ordena();
@@ -209,18 +217,18 @@ namespace Gabriel.Cat.Wpf
 
                     }
                     else
-                        itemsSelectedActual.Afegir(item);
+                        itemsSelectedActual.Add(item);
                 }
                 else if (item == itemSelectedActual)
                     itemSelectedActual = null;
                 else if (tipo == TipoSeleccion.More)
-                    itemsSelectedActual.Elimina(item);
+                    itemsSelectedActual.Remove(item);
 
                 if (tipo == TipoSeleccion.One && itemsSelectedActual.Count > 0)
                 {
                     for (int i = 0; i < itemsSelectedActual.Count; i++)
                         itemsSelectedActual[i].Seleccionado = false;
-                    itemsSelectedActual.Buida();
+                    itemsSelectedActual.Clear();
                     if (itemSelectedActual != null)
                         itemSelectedActual.Seleccionado = false;
                     ElementoSeleccionado(sender, e);
@@ -266,7 +274,7 @@ namespace Gabriel.Cat.Wpf
                 });
                 if (itemToRemove != null)
                 {
-                    objectes.Elimina(itemToRemove);
+                    objectes.Remove(itemToRemove);
                     //quito el objeto del control
                     itemToRemove.MouseLeftButtonUp -= ElementoSeleccionado;
                     stkPanel.Children.Remove(itemToRemove);
@@ -281,7 +289,7 @@ namespace Gabriel.Cat.Wpf
                 if (posicion < 0 || posicion > objectes.Count)
                     throw new ArgumentOutOfRangeException();
                 ItemColorList item = objectes[posicion];
-                objectes.Elimina(item);
+                objectes.Remove(item);
                 //elimino de los controles
                 stkPanel.Children.Remove(item);
                 item.MouseLeftButtonUp -= ElementoSeleccionado;
@@ -298,7 +306,7 @@ namespace Gabriel.Cat.Wpf
             Llista<Object> objectsWithColor = new Llista<object>();
             for (int i = 0; i < stkPanel.Children.Count; i++)
                 if (((ItemColorList)stkPanel.Children[i]).ColorBackGround.Equals(elementsWithColorBackGround))
-                    objectsWithColor.Afegir(((ItemColorList)stkPanel.Children[i]).Object);
+                    objectsWithColor.Add(((ItemColorList)stkPanel.Children[i]).Object);
             return objectsWithColor.ToArray();
         }
         //poder hacer insertAt(int posicion)
@@ -310,7 +318,7 @@ namespace Gabriel.Cat.Wpf
                 {
                     objectes[i].MouseLeftButtonUp -= ElementoSeleccionado;
                 }
-                objectes.Buida();
+                objectes.Clear();
                 itemSelectedActual = null;
                 //vacio la lista de controles del control...
                 stkPanel.Children.Clear();
@@ -341,7 +349,7 @@ namespace Gabriel.Cat.Wpf
             {
                 itemActual = objectes[i];
                 if (itemActual.Seleccionado)
-                    objectesSeleccionats.Afegir(itemActual.Object);
+                    objectesSeleccionats.Add(itemActual.Object);
             }
             return objectesSeleccionats.ToTaula();
         }
@@ -419,9 +427,9 @@ namespace Gabriel.Cat.Wpf
                         itemsSelectedActual[i].Seleccionado = true;
                     }
                     else
-                        itemsAQuitar.Afegir(itemsSelectedActual[i]);
+                        itemsAQuitar.Add(itemsSelectedActual[i]);
                 }
-                itemsSelectedActual.Elimina(itemsAQuitar);
+                itemsSelectedActual.RemoveRange(itemsAQuitar);
             }
         }
 
