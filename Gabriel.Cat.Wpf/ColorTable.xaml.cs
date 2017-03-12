@@ -65,7 +65,7 @@ namespace Gabriel.Cat.Wpf
                             Image imgColorToChange = (Image)s;
                             ColorPos colorPos= (ColorPos)imgColorToChange.Tag;
                             colorAnt = colorPos.Color;
-                            colorDialog.ColorPicker.SelectedColor =Color.FromArgb(colorPos.Color.A, colorPos.Color.R, colorPos.Color.G, colorPos.Color.B);
+                            colorDialog.ColorPicker.SelectedColor =System.Windows.Media.Color.FromArgb(colorPos.Color.A, colorPos.Color.R, colorPos.Color.G, colorPos.Color.B);
                             colorDialog.ShowDialog();
                             if (!colorDialog.EstaCancelado)
                             {

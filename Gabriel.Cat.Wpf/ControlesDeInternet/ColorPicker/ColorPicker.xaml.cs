@@ -35,7 +35,7 @@ namespace WPFColorPickerLib
         #region Data
 
         DrawingAttributes drawingAttributes;
-        Color selectedColor;
+        System.Windows.Media.Color selectedColor;
         Boolean isMouseDown;
         ImagePointerLocated imagenActual;
         #endregion
@@ -54,7 +54,7 @@ namespace WPFColorPickerLib
         /// Constructor that initializes to ColorPicker to the specified color.
         /// </summary>
         /// <param name="initialColor"></param>
-        public ColorPicker(Color initialColor)
+        public ColorPicker(System.Windows.Media.Color initialColor)
         {
             drawingAttributes = new DrawingAttributes();
             InitializeComponent();
@@ -114,7 +114,7 @@ namespace WPFColorPickerLib
         /// <summary>
         /// Gets or privately sets the Selected Color.
         /// </summary>
-        public Color SelectedColor
+        public System.Windows.Media.Color SelectedColor
         {
             get { return selectedColor; }
             set
@@ -176,7 +176,7 @@ namespace WPFColorPickerLib
         /// </summary>
         private void AlphaSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            SelectedColor = Color.FromArgb((byte)AlphaSlider.Value, SelectedColor.R, SelectedColor.G, SelectedColor.B);
+            SelectedColor = System.Windows.Media.Color.FromArgb((byte)AlphaSlider.Value, SelectedColor.R, SelectedColor.G, SelectedColor.B);
         }
 
         /// <summary>
@@ -225,8 +225,8 @@ namespace WPFColorPickerLib
         /// </summary>
         private void CreateAlphaLinearBrush()
         {
-            Color startColor = Color.FromArgb((byte)0, SelectedColor.R, SelectedColor.G, SelectedColor.B);
-            Color endColor = Color.FromArgb((byte)255, SelectedColor.R, SelectedColor.G, SelectedColor.B);
+            System.Windows.Media.Color startColor = System.Windows.Media.Color.FromArgb((byte)0, SelectedColor.R, SelectedColor.G, SelectedColor.B);
+            System.Windows.Media.Color endColor = System.Windows.Media.Color.FromArgb((byte)255, SelectedColor.R, SelectedColor.G, SelectedColor.B);
             LinearGradientBrush alphaBrush = new LinearGradientBrush(startColor, endColor, new Point(0, 0), new Point(1, 0));
             AlphaBorder.Background = alphaBrush;
         }
@@ -356,33 +356,33 @@ namespace WPFColorPickerLib
                     switch (txt.Name)
                     {
                         case "txtAlpha":
-                            SelectedColor = Color.FromArgb(Convert.ToByte(txt.Text), SelectedColor.R, SelectedColor.G, SelectedColor.B);
+                            SelectedColor = System.Windows.Media.Color.FromArgb(Convert.ToByte(txt.Text), SelectedColor.R, SelectedColor.G, SelectedColor.B);
                             break;
                         case "txtAlphaHex":
-                            SelectedColor = Color.FromArgb((byte)((Hex)txt.Text), SelectedColor.R, SelectedColor.G, SelectedColor.B);
+                            SelectedColor = System.Windows.Media.Color.FromArgb((byte)((Hex)txt.Text), SelectedColor.R, SelectedColor.G, SelectedColor.B);
                             break;
 
                         case "txtRed":
-                            SelectedColor = Color.FromArgb(SelectedColor.A, Convert.ToByte(txt.Text), SelectedColor.G, SelectedColor.B);
+                            SelectedColor = System.Windows.Media.Color.FromArgb(SelectedColor.A, Convert.ToByte(txt.Text), SelectedColor.G, SelectedColor.B);
                             break;
                         case "txtRedHex":
-                            SelectedColor = Color.FromArgb(SelectedColor.A, (byte)((Hex)txt.Text), SelectedColor.G, SelectedColor.B);
+                            SelectedColor = System.Windows.Media.Color.FromArgb(SelectedColor.A, (byte)((Hex)txt.Text), SelectedColor.G, SelectedColor.B);
 
                             break;
 
                         case "txtGreen":
-                            SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, Convert.ToByte(txt.Text), SelectedColor.B);
+                            SelectedColor = System.Windows.Media.Color.FromArgb(SelectedColor.A, SelectedColor.R, Convert.ToByte(txt.Text), SelectedColor.B);
                             break;
                         case "txtGreenHex":
-                            SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, (byte)((Hex)txt.Text), SelectedColor.B);
+                            SelectedColor = System.Windows.Media.Color.FromArgb(SelectedColor.A, SelectedColor.R, (byte)((Hex)txt.Text), SelectedColor.B);
                             break;
 
                         case "txtBlue":
-                            SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, Convert.ToByte(txt.Text));
+                            SelectedColor = System.Windows.Media.Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, Convert.ToByte(txt.Text));
 
                             break;
                         case "txtBlueHex":
-                            SelectedColor = Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, (byte)((Hex)txt.Text));
+                            SelectedColor = System.Windows.Media.Color.FromArgb(SelectedColor.A, SelectedColor.R, SelectedColor.G, (byte)((Hex)txt.Text));
 
                             break;
                         case "txtAll":

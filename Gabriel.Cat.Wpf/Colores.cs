@@ -34,12 +34,12 @@ namespace Gabriel.Cat.Wpf
         }
         public static string GetName(System.Windows.Media.Color color)
         {
-            return colores.ObtainTkey1WhithTkey2(color.ToString());
+            return colores.GetTkey1WhithTkey2(color.ToString());
         }
 
-        public static Color GetColor(string name)
+        public static System.Windows.Media.Color GetColor(string name)
         {
-            return colores.ObtainValueWithKey1(name);
+            return colores.GetValueWithKey1(name);
         }
 
     }

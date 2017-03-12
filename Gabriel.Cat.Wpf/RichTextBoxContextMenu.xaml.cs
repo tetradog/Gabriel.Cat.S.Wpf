@@ -141,10 +141,10 @@ namespace Gabriel.Cat.Wpf
             for (int i = 0; i < colores.Length; i++)
             {
                 item = new MenuItem();
-                item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
+                item.Header = imgDiccionary.GetValueWithKey1(colores[i].ToString());
 
                 item.Click += CambiarColorTextoSeleccionado;
-                item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
+                item.Icon = imgDiccionary.GetValueWithKey2(colores[i].ToString());
                 item.Visibility = Visibility.Visible;
                 item.Tag = colores[i];
                 menuColorLetra.Items.Add(item);
@@ -153,10 +153,10 @@ namespace Gabriel.Cat.Wpf
             for (int i = 0; i < colores.Length; i++)
             {
                 item = new MenuItem();
-                item.Header = imgDiccionary.ObtainTkey1WhithTkey2(colores[i].ToString());
+                item.Header = imgDiccionary.GetTkey1WhithTkey2(colores[i].ToString());
 
                 item.Click += PonMarcadorDeEsteColor;
-                item.Icon = imgDiccionary.ObtainValueWithKey2(colores[i].ToString());
+                item.Icon = imgDiccionary.GetValueWithKey2(colores[i].ToString());
                 item.Visibility = Visibility.Visible;
                 item.Tag = colores[i];
                 menuMarcador.Items.Add(item);

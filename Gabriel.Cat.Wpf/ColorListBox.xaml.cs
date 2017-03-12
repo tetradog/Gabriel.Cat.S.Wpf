@@ -28,8 +28,8 @@ namespace Gabriel.Cat.Wpf
         }
         Llista<ItemColorList> objectes;//si se pudiese indexar por la referencia del objeto
         bool onlyOneSelecction;
-        Color colorPorDefecto;
-        Color colorSeleccionadoPorDefecto;
+        System.Windows.Media.Color colorPorDefecto;
+        System.Windows.Media.Color colorSeleccionadoPorDefecto;
         ItemColorList itemSelectedActual;
         Llista<ItemColorList> itemsSelectedActual;
         TipoSeleccion tipo;
@@ -152,9 +152,9 @@ namespace Gabriel.Cat.Wpf
         }
         public void Add(Object obj)
         { Add(obj, colorPorDefecto, colorSeleccionadoPorDefecto); }
-        public void Add(Object obj, Color color)
+        public void Add(Object obj, System.Windows.Media.Color color)
         { Add(obj, color, colorSeleccionadoPorDefecto); }
-        public void Add(Object obj, Color color, Color colorSeleccionado)
+        public void Add(Object obj, System.Windows.Media.Color color, System.Windows.Media.Color colorSeleccionado)
         {
             Action act = () =>
             {
@@ -165,7 +165,7 @@ namespace Gabriel.Cat.Wpf
             };
             Dispatcher.BeginInvoke(act);
         }
-        public void Add(Object obj, Color color, bool invertirColorAlSeleccionarlo)
+        public void Add(Object obj, System.Windows.Media.Color color, bool invertirColorAlSeleccionarlo)
         {
             Action act = () =>
             {
@@ -241,16 +241,16 @@ namespace Gabriel.Cat.Wpf
 
         public void AddRange(IEnumerable<Object> objs)
         { AddRange(objs, colorPorDefecto); }
-        public void AddRange(IEnumerable<Object> objs, Color color)
+        public void AddRange(IEnumerable<Object> objs, System.Windows.Media.Color color)
         {
             AddRange(objs, color, colorSeleccionadoPorDefecto);
         }
-        public void AddRange(IEnumerable<Object> objs, Color color, Color colorSeleccionado)
+        public void AddRange(IEnumerable<Object> objs, System.Windows.Media.Color color, System.Windows.Media.Color colorSeleccionado)
         {
             foreach (Object obj in objs)
                 Add(obj, color, colorSeleccionado);
         }
-        public void AddRange(IEnumerable<Object> objs, Color color, bool invertirColorSeleccionado)
+        public void AddRange(IEnumerable<Object> objs, System.Windows.Media.Color color, bool invertirColorSeleccionado)
         {
             foreach (Object obj in objs)
                 Add(obj, color, invertirColorSeleccionado);
@@ -296,12 +296,12 @@ namespace Gabriel.Cat.Wpf
             };
             Dispatcher.BeginInvoke(act);
         }
-        public void Remove(Color elementsWithColorBackGround)
+        public void Remove(System.Windows.Media.Color elementsWithColorBackGround)
         {
             Remove(GetElementsWithBackGroundColor(elementsWithColorBackGround));
         }
 
-        public Object[] GetElementsWithBackGroundColor(Color elementsWithColorBackGround)
+        public Object[] GetElementsWithBackGroundColor(System.Windows.Media.Color elementsWithColorBackGround)
         {
             Llista<Object> objectsWithColor = new Llista<object>();
             for (int i = 0; i < stkPanel.Children.Count; i++)
@@ -354,7 +354,7 @@ namespace Gabriel.Cat.Wpf
             return objectesSeleccionats.ToTaula();
         }
 
-        public void CambiarColor(object obj, Color color)
+        public void CambiarColor(object obj, System.Windows.Media.Color color)
         {
             Action act = () =>
             {
@@ -443,8 +443,8 @@ namespace Gabriel.Cat.Wpf
     public class ItemColorList : UserControl, IComparable, IComparable<ItemColorList>
     {
         TextBlock txtTexto;
-        Color color;
-        Color colorSeleccionado;
+        System.Windows.Media.Color color;
+        System.Windows.Media.Color colorSeleccionado;
         bool seleccionado;
         bool invertirColorAlSeleccionar;
         object obj;//objeto al que hacen referencia :D
@@ -478,7 +478,7 @@ namespace Gabriel.Cat.Wpf
             }
         }
 
-        public Color Color
+        public System.Windows.Media.Color Color
         {
             get
             {
@@ -494,7 +494,7 @@ namespace Gabriel.Cat.Wpf
 
 
 
-        public Color ColorSeleccionado
+        public System.Windows.Media.Color ColorSeleccionado
         {
             get
             {
@@ -592,7 +592,7 @@ namespace Gabriel.Cat.Wpf
             };
             Dispatcher.BeginInvoke(act);
         }
-        public Color ColorBackGround
+        public System.Windows.Media.Color ColorBackGround
         {
             get { return ((SolidColorBrush)this.Background).Color; }
         }
