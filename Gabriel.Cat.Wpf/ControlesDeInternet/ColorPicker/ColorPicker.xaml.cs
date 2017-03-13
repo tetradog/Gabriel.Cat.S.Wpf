@@ -92,7 +92,7 @@ namespace WPFColorPickerLib
 
         public System.Drawing.Bitmap Imagen3
         {
-            get { return this.ImgCircle1.ToBitmap(); }
+            get { return this.ImgSqaure2.ToBitmap(); }
             set
             {
                 ChangeImage(ImgSqaure2, value);
