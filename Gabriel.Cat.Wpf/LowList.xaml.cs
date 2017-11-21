@@ -15,32 +15,36 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using Gabriel.Cat.Extension;
 namespace Gabriel.Cat.Wpf
 {
 	/// <summary>
 	/// Interaction logic for LowList.xaml
 	/// </summary>
-	public partial class LowList<TControl,TData> : UserControl 
-		where TControl: ISetData<TData>,new()
+	public partial class LowList : UserControl
 	{
-		Llista<TControl> lstControles;
-		List<UserControl> lstControlesVisualizados;
+		Llista<IControlListaData> lstControles;
+		List<ControlLista> lstControlesVisualizados;
 		public LowList()
 		{
-			lstControles=new Llista<TControl>();
-			lstControlesVisualizados=new List<UserControl>();
-			lstControles.Updated+=ActualizaListaVisualizada;
+			lstControlesVisualizados = new List<ControlLista>();
 	
 		}
 
-		public IList<TControl> Controles {
+		public Llista<IControlListaData> Controles {
 			get {
 				return lstControles;
 			}
+			set {
+				if (lstControles != null)
+					lstControles.Updated -= ActualizaListaVisualizada;
+				lstControles = value;
+				lstControles.Updated += ActualizaListaVisualizada;
+				ActualizaListaVisualizada();
+			}
 		}
 
-		void ActualizaListaVisualizada(object sender=null, EventArgs e=null)
+		void ActualizaListaVisualizada(object sender = null, EventArgs e = null)
 		{
 			//obtengo el primer elemento que se ve segun el scroll
 			//voy poniendo los elementos (si hace falta más controles hacer más)
@@ -56,10 +60,42 @@ namespace Gabriel.Cat.Wpf
 			ActualizaListaVisualizada();
 		}
 	}
-	public interface ISetData<T>
+	public interface IControlListaData
 	{
-		void SetData(T data);
-		void Clear();
+		/// <summary>
+		/// returns dictorionary propertyName,value
+		/// </summary>
+		/// <returns></returns>
+		IDictionary<string,object> GetData();
+	
+	}
+	public class ControlListaData:IControlListaData
+	{
+		#region IControlListaData implementation
+		public IDictionary<string, object> GetData()
+		{
+			SortedList<string,object> dic = new SortedList<string, object>();
+			Propiedad[] propiedades = this.GetProperties();//mirar si coge los valores de los hijos...
+			for (int i = 0; i < propiedades.Length; i++)
+				dic.Add(propiedades[i].Nombre, propiedades[i].Objeto);
+			return dic;
+
+		}
+		#endregion
+		
+	}
+	public abstract class ControlLista:UIElement
+	{
+		public abstract void Clear();
+		public void SetData(IControlListaData data)
+		{
+			Propiedad[] propiedades = this.GetProperties();
+			IDictionary<string, object> dic = data.GetData();
+			for (int i = 0; i < propiedades.Length; i++) {
+				if (dic.ContainsKey(propiedades[i].Nombre))
+					this.SetProperty(propiedades[i].Nombre, dic[propiedades[i].Nombre]);
+			}
+		}
 		
 	}
 }
