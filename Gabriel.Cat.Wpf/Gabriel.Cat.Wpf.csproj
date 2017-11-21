@@ -8,9 +8,10 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Gabriel.Cat.Wpf</RootNamespace>
     <AssemblyName>Gabriel.Cat.Wpf</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -84,6 +85,10 @@
     <Compile Include="ControlesDeInternet\ColorPicker\ColorPicker.xaml.cs" />
     <Compile Include="ExtensionWpf.cs" />
     <Compile Include="ImagePointerLocated.cs" />
+    <Compile Include="LowList.xaml.cs">
+      <DependentUpon>LowList.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MenuItems.xaml.cs">
       <DependentUpon>MenuItems.xaml</DependentUpon>
     </Compile>
@@ -130,6 +135,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="LowList.xaml" />
     <Page Include="MenuItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
