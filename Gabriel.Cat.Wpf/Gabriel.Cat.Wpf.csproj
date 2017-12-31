@@ -74,6 +74,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calendario.xaml.cs">
+      <DependentUpon>Calendario.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Colores.cs" />
     <Compile Include="ColorListBox.xaml.cs">
       <DependentUpon>ColorListBox.xaml</DependentUpon>
@@ -122,6 +126,7 @@
     <Compile Include="WindowSinBordes.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Calendario.xaml" />
     <Page Include="ColorListBox.xaml" />
     <Page Include="ColorTable.xaml">
       <SubType>Designer</SubType>
