@@ -16,6 +16,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Gabriel.Cat.Extension;
+using Gabriel.Cat.S.Utilitats;
 namespace Gabriel.Cat.Wpf
 {
 	/// <summary>

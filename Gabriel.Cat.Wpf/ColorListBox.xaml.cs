@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Gabriel.Cat.Extension;
+using Gabriel.Cat.S.Utilitats;
+
 namespace Gabriel.Cat.Wpf
 {
     public delegate void ItemSelectedEventHandler(Object objSelected, ItemArgs arg);
@@ -130,24 +132,29 @@ namespace Gabriel.Cat.Wpf
         {
             objectes.WhileEach((item) =>
             {
+                bool salir;
                 if (item.Object == obj)
                 {
+                   
                     item.Seleccionado = false;
-                    ElementoSeleccionado(item, null); return false;
+                    ElementoSeleccionado(item, null); salir = false;
                 }
-                return true;
+                else salir = true;
+                return salir;
             });
         }
         public void UnSelectItem(object obj)
         {
             objectes.WhileEach((item) =>
             {
+                bool salir;
                 if (item.Object == obj)
                 {
                     item.Seleccionado = true;
-                    ElementoSeleccionado(item, null); return false;
+                    ElementoSeleccionado(item, null); salir = false;
                 }
-                return true;
+                else salir = true;
+                return salir;
             });
         }
         public void Add(Object obj)
@@ -351,7 +358,7 @@ namespace Gabriel.Cat.Wpf
                 if (itemActual.Seleccionado)
                     objectesSeleccionats.Add(itemActual.Object);
             }
-            return objectesSeleccionats.ToTaula();
+            return objectesSeleccionats.ToArray();
         }
 
         public void CambiarColor(object obj, System.Windows.Media.Color color)

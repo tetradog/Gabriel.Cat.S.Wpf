@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Gabriel.Cat.Extension;
 using System.Xml;
+using Gabriel.Cat.S.Utilitats;
+
 namespace Gabriel.Cat.Wpf
 {
     /// <summary>

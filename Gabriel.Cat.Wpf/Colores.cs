@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-
+using Gabriel.Cat.S;
 namespace Gabriel.Cat.Wpf
 {
     public static class Colores
