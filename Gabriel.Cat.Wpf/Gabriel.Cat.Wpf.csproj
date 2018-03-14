@@ -88,6 +88,8 @@
     <Compile Include="ControlesDeInternet\ColorPicker\ColorDialog.xaml.cs" />
     <Compile Include="ControlesDeInternet\ColorPicker\ColorPicker.xaml.cs" />
     <Compile Include="ExtensionWpf.cs" />
+    <Compile Include="Gabriel.Cat.Utilitats.Bitmap\BitmapPointerLocated.cs" />
+    <Compile Include="Gabriel.Cat.Utilitats.Bitmap\ImagenConRuta.cs" />
     <Compile Include="ImagePointerLocated.cs" />
     <Compile Include="LowList.xaml.cs">
       <DependentUpon>LowList.xaml</DependentUpon>

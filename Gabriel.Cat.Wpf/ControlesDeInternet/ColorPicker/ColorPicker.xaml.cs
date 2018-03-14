@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using Gabriel.Cat.Extension;
 using Gabriel.Cat;
 using Gabriel.Cat.Wpf;
+using Gabriel.Cat.S.Utilitats;
 //sacado de http://www.codeproject.com/Articles/33001/WPF-A-Simple-Color-Picker-With-Preview
 namespace WPFColorPickerLib
 {
@@ -305,7 +306,7 @@ namespace WPFColorPickerLib
             const int PARTESCOLORARGB = 4;
             const int CARACTERESBYTESARGB = CARACTERESBYTEMAX * PARTESCOLORARGB;
             TextBox txt = (TextBox)sender;
-
+            byte[] bytesColor;
             //valido que los campos Hex esten bien escritos :)
             //no modificar el texto porque molesta solo dejar poner caracteres validos y en mayus max lenght 2 si es 0 se pone '0' :) solo en ese caso se modifica :D
             switch (txt.Name)
@@ -315,7 +316,7 @@ namespace WPFColorPickerLib
                 case "txtGreenHex":
                 case "txtBlueHex":
                 case "txtAlphaHex":
-                    e.Handled = !Gabriel.Cat.Hex.ValidaString(txt.Text) && txt.Text.Length > CARACTERESBYTEMAX;
+                    e.Handled = !Gabriel.Cat.S.Utilitats.Hex.ValidaString(txt.Text) && txt.Text.Length > CARACTERESBYTEMAX;
                     if (!e.Handled)
                     {
                         if (txt.Text.Length == 0)
@@ -333,7 +334,7 @@ namespace WPFColorPickerLib
                         txt.Text = "0";
                     else if (txt.Text[0] == '#')
                         txt.Text = txt.Text.Remove(0, 1);
-                    e.Handled = !Gabriel.Cat.Hex.ValidaString(txt.Text) && txt.Text.Length > CARACTERESBYTESARGB;
+                    e.Handled = !Gabriel.Cat.S.Utilitats.Hex.ValidaString(txt.Text) && txt.Text.Length > CARACTERESBYTESARGB;
                     if (!e.Handled)
                     {
                         if (txt.Text.Length == 0)
@@ -386,7 +387,8 @@ namespace WPFColorPickerLib
 
                             break;
                         case "txtAll":
-                            SelectedColor = Serializar.ToColor(Serializar.GetBytes((int)(Hex)txtAll.Text)).ToMediaColor();
+                            bytesColor = Serializar.GetBytes((int)(Hex)txtAll.Text);
+                            SelectedColor = ExtensionWpf.ToMediaColor(System.Drawing.Color.FromArgb(bytesColor[0], bytesColor[1], bytesColor[2], bytesColor[3]));
                             break;
                     }
                 }

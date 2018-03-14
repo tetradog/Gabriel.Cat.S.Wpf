@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Gabriel.Cat.Extension;
+using Gabriel.Cat.S.Extension;
 using Gabriel.Cat.S.Utilitats;
 
 namespace Gabriel.Cat.Wpf
@@ -145,6 +146,7 @@ namespace Gabriel.Cat.Wpf
         }
         public void UnSelectItem(object obj)
         {
+            
             objectes.WhileEach((item) =>
             {
                 bool salir;
