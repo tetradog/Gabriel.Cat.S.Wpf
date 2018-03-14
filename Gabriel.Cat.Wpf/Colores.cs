@@ -6,7 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using Gabriel.Cat.S;
+using Gabriel.Cat.S.Utilitats;
+using Gabriel.Cat.S.Extension;
 namespace Gabriel.Cat.Wpf
 {
     public static class Colores
@@ -26,7 +27,7 @@ namespace Gabriel.Cat.Wpf
                 }
                 catch { }
             }
-            ListaColores = colores.ValuesToArray();
+            ListaColores = colores.GetValues();
         }
         public static IEnumerable<System.Windows.Media.Color> GetColors()
         {

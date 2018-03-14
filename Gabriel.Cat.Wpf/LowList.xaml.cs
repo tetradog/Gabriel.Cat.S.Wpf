@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Gabriel.Cat.Extension;
 using Gabriel.Cat.S.Utilitats;
+using Gabriel.Cat.S.Extension;
 namespace Gabriel.Cat.Wpf
 {
 	/// <summary>
@@ -76,9 +77,9 @@ namespace Gabriel.Cat.Wpf
 		public IDictionary<string, object> GetData()
 		{
 			SortedList<string,object> dic = new SortedList<string, object>();
-			Propiedad[] propiedades = this.GetProperties();//mirar si coge los valores de los hijos...
-			for (int i = 0; i < propiedades.Length; i++)
-				dic.Add(propiedades[i].Nombre, propiedades[i].Objeto);
+			IList<Propiedad> propiedades = this.GetPropiedades();//mirar si coge los valores de los hijos... 
+			for (int i = 0; i < propiedades.Count; i++)
+				dic.Add(propiedades[i].Info.Nombre, propiedades[i].Objeto);
 			return dic;
 
 		}
@@ -90,11 +91,11 @@ namespace Gabriel.Cat.Wpf
 		public abstract void Clear();
 		public void SetData(IControlListaData data)
 		{
-			Propiedad[] propiedades = this.GetProperties();
+			IList<Propiedad> propiedades = this.GetPropiedades();
 			IDictionary<string, object> dic = data.GetData();
-			for (int i = 0; i < propiedades.Length; i++) {
-				if (dic.ContainsKey(propiedades[i].Nombre))
-					this.SetProperty(propiedades[i].Nombre, dic[propiedades[i].Nombre]);
+			for (int i = 0; i < propiedades.Count; i++) {
+				if (dic.ContainsKey(propiedades[i].Info.Nombre))
+					this.SetProperty(propiedades[i].Info.Nombre, dic[propiedades[i].Info.Nombre]);
 			}
 		}
 		
