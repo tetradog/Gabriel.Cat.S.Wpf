@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Gabriel.Cat.Wpf</RootNamespace>
     <AssemblyName>Gabriel.Cat.Wpf</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -40,8 +40,8 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gabriel.Cat.S.Utilitats">
-      <HintPath>..\..\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\bin\Release\netstandard1.2\Gabriel.Cat.S.Utilitats.dll</HintPath>
+    <Reference Include="Gabriel.Cat.S.Utilitats, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gabriel.Cat.S.Utilitats.1.0.4.1\lib\netstandard2.0\Gabriel.Cat.S.Utilitats.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -61,6 +61,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.4.5.0-preview1-26216-02\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -207,6 +210,7 @@
     <None Include="ImgsRicoTextBox\marcador.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\ColorSwatchCircle.png" />
   </ItemGroup>
   <ItemGroup>
