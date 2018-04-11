@@ -10,6 +10,7 @@ namespace Gabriel.Cat
 
     public static class Aplicacion
     {
+        //por probar
         public static bool EstaEnElInicio
         {
             get
@@ -46,6 +47,23 @@ namespace Gabriel.Cat
                 }
 
                 hklm.Close();
+            }
+        }
+        public static bool GetEstaEnPantallaCompleta(System.Windows.Window windows)
+        {    
+           return windows.WindowStyle == System.Windows.WindowStyle.None&& windows.WindowState == System.Windows.WindowState.Maximized; 
+        }
+        public static void SetEstaEnPantallaCompleta(System.Windows.Window windows,bool setPantallaCompleta=true)
+        {
+            if (setPantallaCompleta)
+            {
+                windows.WindowStyle = System.Windows.WindowStyle.None;
+                windows.WindowState = System.Windows.WindowState.Maximized;
+            }
+            else
+            {
+                windows.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+                windows.WindowState = System.Windows.WindowState.Normal;
             }
         }
     }
