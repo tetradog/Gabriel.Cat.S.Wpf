@@ -8,10 +8,11 @@
     <owners>$author$</owners>
     <licenseUrl>https://github.com/tetradog/Gabriel.Cat.Wpf/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/tetradog/Gabriel.Cat.Wpf</projectUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <repository url="https://github.com/tetradog/Gabriel.Cat.Wpf/" />
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
     <copyright>Copyright 2018</copyright>
-    <tags>Wpf Gabriel.Cat Utilidades</tags>
+    <tags>Wpf Utilitats Gabriel</tags>
   </metadata>
 </package>
