@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Gabriel.Cat.Wpf")]
 [assembly: AssemblyDescription("utilidades para programar en WPF")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Gabriel.Cat")]
+[assembly: AssemblyCompany("Gabriel.Cat.Developer")]
 [assembly: AssemblyProduct("Gabriel.Cat.Wpf")]
 [assembly: AssemblyCopyright("Copyright 2016")]
 [assembly: AssemblyTrademark("")]
@@ -29,3 +29,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.2.2")]
+[assembly: AssemblyFileVersion("1.0.2.2")]
+

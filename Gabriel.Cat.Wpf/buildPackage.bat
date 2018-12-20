@@ -1,1 +1,1 @@
-C:\Users\tetra\.nuget\packages\pgoogledrive\1.0.0\nuget.exe pack -IncludeReferencedProjects -properties Configuration=Release
+C:\Users\tetra\.nuget\packages\pgoogledrive\1.0.0\nuget.exe pack ..\Gabriel.Cat.Wpf\Gabriel.Cat.Wpf.nuspec -IncludeReferencedProjects -properties Configuration=Release
