@@ -1,20 +1,17 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Package</id>
+    <id>$id$</id>
     <version>1.1.0</version>
-    <authors>tetra</authors>
-    <owners>tetra</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Package description</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://www.gnu.org/licenses/gpl-3.0.en.html</licenseUrl>
+    <projectUrl>https://github.com/tetradog/Gabriel.Cat.Wpf</projectUrl>
+    <repository url="https://github.com/tetradog/Gabriel.Cat.Wpf" />
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>$description$</description>
     <copyright>Copyright 2018</copyright>
-    <tags>Tag1 Tag2</tags>
-    <dependencies>
-      <dependency id="SampleDependency" version="1.0" />
-    </dependencies>
+    <tags>Xamarin Gabriel Wpf</tags>
   </metadata>
 </package>
