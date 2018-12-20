@@ -12,6 +12,6 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>Copyright 2018</copyright>
-    <tags>Xamarin Gabriel Wpf</tags>
+    <tags>Gabriel Wpf</tags>
   </metadata>
 </package>
