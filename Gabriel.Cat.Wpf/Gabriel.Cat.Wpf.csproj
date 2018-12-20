@@ -40,8 +40,8 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gabriel.Cat.S.Utilitats, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Gabriel.Cat.S.Utilitats.1.0.4.3-preview1.0.11\lib\netstandard2.0\Gabriel.Cat.S.Utilitats.dll</HintPath>
+    <Reference Include="Gabriel.Cat.S.Utilitats, Version=1.0.4.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\CronosHistory\packages\Gabriel.Cat.S.Utilitats.1.0.4.4-preview1.0.0\lib\netstandard2.0\Gabriel.Cat.S.Utilitats.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>

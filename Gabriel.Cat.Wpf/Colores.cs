@@ -27,7 +27,7 @@ namespace Gabriel.Cat.Wpf
                 }
                 catch { }
             }
-            ListaColores = colores.GetValues();
+            ListaColores = colores.ValueToArray();
         }
         public static IEnumerable<System.Windows.Media.Color> GetColors()
         {

@@ -28,18 +28,18 @@ namespace Gabriel.Cat.Wpf
         //poner marcado
         delegate void MetodoSinParametros();
         static ContextMenu context;
-        static TwoKeysList<string, string, System.Windows.Controls.Image> imgDiccionary;
+        static TwoKeysList<string, string, System.Drawing.Bitmap> imgDiccionary;
         RichTextBox rtbParent;
 
         static RichTextBoxContextMenu()
         {
             context = new ContextMenu();
-            imgDiccionary = new TwoKeysList<string, string, System.Windows.Controls.Image>();
+            imgDiccionary = new TwoKeysList<string, string, System.Drawing.Bitmap>();
             System.Windows.Media.Color[] colores = Colores.ListaColores;
-            System.Windows.Controls.Image img;
+            System.Drawing.Bitmap img;
             for (int i = 0; i < colores.Length; i++)
             {
-                img = colores[i].ToImage(20, 15);
+                img = colores[i].ToBitmap(20, 15);
                 try
                 {
                     imgDiccionary.Add(colores[i].GetName(), colores[i].ToString(), img);
@@ -143,10 +143,10 @@ namespace Gabriel.Cat.Wpf
             for (int i = 0; i < colores.Length; i++)
             {
                 item = new MenuItem();
-                item.Header = imgDiccionary.GetValueWithKey1(colores[i].ToString());
+                item.Header = imgDiccionary.GetTkey1WhithTkey2(colores[i].ToString());
 
                 item.Click += CambiarColorTextoSeleccionado;
-                item.Icon = imgDiccionary.GetValueWithKey2(colores[i].ToString());
+                item.Icon = imgDiccionary.GetValueWithKey2(colores[i].ToString()).ToImage();
                 item.Visibility = Visibility.Visible;
                 item.Tag = colores[i];
                 menuColorLetra.Items.Add(item);
@@ -158,7 +158,7 @@ namespace Gabriel.Cat.Wpf
                 item.Header = imgDiccionary.GetTkey1WhithTkey2(colores[i].ToString());
 
                 item.Click += PonMarcadorDeEsteColor;
-                item.Icon = imgDiccionary.GetValueWithKey2(colores[i].ToString());
+                item.Icon = imgDiccionary.GetValueWithKey2(colores[i].ToString()).ToImage();
                 item.Visibility = Visibility.Visible;
                 item.Tag = colores[i];
                 menuMarcador.Items.Add(item);

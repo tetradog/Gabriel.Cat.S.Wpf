@@ -1,0 +1,1 @@
+C:\Users\tetra\.nuget\packages\pgoogledrive\1.0.0\nuget.exe pack -IncludeReferencedProjects -properties Configuration=Release

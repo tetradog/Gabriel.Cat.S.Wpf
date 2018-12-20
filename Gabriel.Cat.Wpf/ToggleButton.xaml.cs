@@ -28,7 +28,10 @@ namespace Gabriel.Cat.Wpf
         public ToggleButton()
         {
             lstBmps = new Llista<Image>();
-            lstBmps.Updated +=(s,e)=>{ Index = Index; };
+            lstBmps.Updated +=(s,e)=>{
+                int index = Index;
+                Index = index;
+            };
             InitializeComponent();
             Index = 0;
         }

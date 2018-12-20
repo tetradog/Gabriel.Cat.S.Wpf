@@ -33,7 +33,10 @@ namespace Gabriel.Cat.Wpf
                 ContextMenu = new RichTextBoxContextMenu(this);
                 TextChanged += (s, o) => TextChangedTimes++;
             }
-            catch { }
+            catch(Exception ex) {
+
+
+            }
         }
         public string Text
         {
