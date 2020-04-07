@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Page Update="Calendario.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ColorListBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ColorTable.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ItemsListAdmin.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="LowList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MenuItems.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ObjViewer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="RichTextBoxContextMenu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="RicoTextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SwitchButtonLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SwitchImg.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ToggleButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>
