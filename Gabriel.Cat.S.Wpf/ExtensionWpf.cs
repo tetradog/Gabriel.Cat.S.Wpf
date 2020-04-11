@@ -38,6 +38,16 @@ namespace Gabriel.Cat.S.Extension
 
     public static class ExtensionWpf
     {
+        public static System.Drawing.Point GetPoint(this Visual visual, MouseEventArgs e)
+        {
+            return GetPoint(visual, e.GetPosition(e.MouseDevice.DirectlyOver));
+        }
+  
+        public static System.Drawing.Point GetPoint(this Visual visual, System.Windows.Point point)
+        {
+            DpiScale dpi = VisualTreeHelper.GetDpi(visual);
+            return new System.Drawing.Point((int)Math.Truncate(dpi.PixelsPerInchX / 10 * point.X), (int)Math.Truncate(dpi.PixelsPerInchY / 10 * point.Y));
+        }
         public static bool InvokeRequired(this Dispatcher dispatcher)
         {
             return !dispatcher.CheckAccess();
