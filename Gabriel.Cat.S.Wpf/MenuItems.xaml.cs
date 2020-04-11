@@ -1,4 +1,4 @@
-﻿using Gabriel.Cat.Extension;
+﻿using Gabriel.Cat.S.Extension;
 using System;
 using System.Collections.Generic;
 using System.Linq;

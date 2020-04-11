@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
-using Gabriel.Cat.Extension;
+using Gabriel.Cat.S.Extension;
 using System.Windows.Controls;
 //sacado de http://www.codeproject.com/Articles/33001/WPF-A-Simple-Color-Picker-With-Preview
 namespace WPFColorPickerLib

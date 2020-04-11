@@ -25,14 +25,13 @@ using System.Collections;
 using System.Xml;
 using System.Windows.Markup;
 using System.IO;
-using Gabriel.Cat.Extension;
 using System.Reflection;
 using System.Windows.Threading;
 using Gabriel.Cat.S.Extension;
 using Gabriel.Cat.S.Utilitats;
 using System.Drawing.Imaging;
 
-namespace Gabriel.Cat.Extension
+namespace Gabriel.Cat.S.Extension
 {
     public delegate void MetodoTratarByteArray(byte[] byteArray);
     public unsafe delegate void MetodoTratarBytePointer(byte* prtByteArray);

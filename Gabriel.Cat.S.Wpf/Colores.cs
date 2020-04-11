@@ -1,4 +1,4 @@
-﻿using Gabriel.Cat.Extension;
+﻿using Gabriel.Cat.S.Extension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Gabriel.Cat.S.Utilitats;
-using Gabriel.Cat.S.Extension;
 namespace Gabriel.Cat.Wpf
 {
     public static class Colores

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Input;
 using System.Windows.Media;
-using Gabriel.Cat.Extension;
+using Gabriel.Cat.S.Extension;
 namespace Gabriel.Cat.Wpf
 {
     /// <summary>

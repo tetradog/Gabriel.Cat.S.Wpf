@@ -5,7 +5,7 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Gabriel.Cat.Extension;
+using Gabriel.Cat.S.Extension;
 using Gabriel.Cat;
 using Gabriel.Cat.Wpf;
 using Gabriel.Cat.S.Utilitats;

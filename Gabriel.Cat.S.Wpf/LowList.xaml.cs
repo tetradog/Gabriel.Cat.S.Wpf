@@ -15,7 +15,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using Gabriel.Cat.Extension;
 using Gabriel.Cat.S.Utilitats;
 using Gabriel.Cat.S.Extension;
 namespace Gabriel.Cat.Wpf
