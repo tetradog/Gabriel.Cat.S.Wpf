@@ -18,16 +18,17 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
     /// </summary>
     public partial class NumericUpDown : UserControl
     {
-        private int _numValue = 0;
+        private double _numValue = 0;
         public event EventHandler ValueChange;
         public NumericUpDown()
         {
             InitializeComponent();
+            Margen = 0.1;
             txtNum.Text = _numValue.ToString();
         }
         
 
-        public int NumValue
+        public double NumValue
         {
             get { return _numValue; }
             set
@@ -37,25 +38,25 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
             }
         }
 
- 
+        public double Margen { get; set; }
 
         private void cmdUp_Click(object sender, RoutedEventArgs e)
         {
-            NumValue++;
+            NumValue+=Margen;
         }
 
         private void cmdDown_Click(object sender, RoutedEventArgs e)
         {
-            NumValue--;
+            NumValue -= Margen;
         }
 
         private void txtNum_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int valueAnt;
+            double valueAnt;
             if (txtNum != null)
             {
                 valueAnt = _numValue;
-                if (int.TryParse(txtNum.Text, out _numValue))
+                if (double.TryParse(txtNum.Text, out _numValue))
                 {
                     if (valueAnt!=_numValue&&ValueChange != null)
                         ValueChange(this, new EventArgs());
