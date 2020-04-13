@@ -24,7 +24,7 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
         {
             InitializeComponent();
             Margen = 0.1;
-            txtNum.Text = _numValue.ToString();
+            NumValue = 0;
         }
 
 
@@ -33,36 +33,42 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
             get { return _numValue; }
             set
             {
+                double numAnt = _numValue;
                 _numValue = value;
-                txtNum.Text = value.ToString();
+                txtNum.TextChanged -= txtNum_TextChanged;
+                txtNum.Text = _numValue.ToString();
+                txtNum.TextChanged += txtNum_TextChanged;
+                if (numAnt != _numValue && ValueChange != null)
+                    ValueChange(this, new EventArgs());
             }
         }
 
+       
         public double Margen { get; set; }
+ 
 
         private void cmdUp_Click(object sender, RoutedEventArgs e)
         {
-            NumValue += Margen;
+            NumValue=Math.Round(NumValue+ Margen,3);
         }
 
         private void cmdDown_Click(object sender, RoutedEventArgs e)
         {
-            NumValue -= Margen;
+            NumValue = Math.Round(NumValue - Margen, 3);
         }
 
         private void txtNum_TextChanged(object sender, TextChangedEventArgs e)
         {
-            double valueAnt;
+            double newValue;
             bool correcto;
             if (txtNum != null)
             {
-                valueAnt = _numValue;
-                correcto = double.TryParse(txtNum.Text, out _numValue);
+                correcto = double.TryParse(txtNum.Text, out newValue);
+                if (correcto)
+                    NumValue = newValue;
+                else NumValue = NumValue;
 
-                txtNum.Text = _numValue.ToString();
-
-                if (correcto && valueAnt != _numValue && ValueChange != null)
-                    ValueChange(this, new EventArgs());
+              
 
             }
         }
