@@ -66,7 +66,7 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
                 correcto = double.TryParse(txtNum.Text, out newValue);
                 if (correcto)
                     NumValue = newValue;
-                else NumValue = NumValue;
+                else NumValue = 0;
 
               
 
