@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
 {
     /// <summary>
-    /// Lógica de interacción para NumericUpDown.xaml
+    /// source https://stackoverflow.com/questions/841293/where-is-the-wpf-numeric-updown-control
     /// </summary>
     public partial class NumericUpDown : UserControl
     {
