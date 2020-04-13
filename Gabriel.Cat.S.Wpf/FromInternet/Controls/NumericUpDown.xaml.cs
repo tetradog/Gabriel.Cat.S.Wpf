@@ -26,7 +26,7 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
             Margen = 0.1;
             txtNum.Text = _numValue.ToString();
         }
-        
+
 
         public double NumValue
         {
@@ -42,7 +42,7 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
 
         private void cmdUp_Click(object sender, RoutedEventArgs e)
         {
-            NumValue+=Margen;
+            NumValue += Margen;
         }
 
         private void cmdDown_Click(object sender, RoutedEventArgs e)
@@ -53,14 +53,17 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
         private void txtNum_TextChanged(object sender, TextChangedEventArgs e)
         {
             double valueAnt;
+            bool correcto;
             if (txtNum != null)
             {
                 valueAnt = _numValue;
-                if (double.TryParse(txtNum.Text, out _numValue))
-                {
-                    if (valueAnt!=_numValue&&ValueChange != null)
-                        ValueChange(this, new EventArgs());
-                }else txtNum.Text = _numValue.ToString();
+                correcto = double.TryParse(txtNum.Text, out _numValue);
+
+                txtNum.Text = _numValue.ToString();
+
+                if (correcto && valueAnt != _numValue && ValueChange != null)
+                    ValueChange(this, new EventArgs());
+
             }
         }
     }
