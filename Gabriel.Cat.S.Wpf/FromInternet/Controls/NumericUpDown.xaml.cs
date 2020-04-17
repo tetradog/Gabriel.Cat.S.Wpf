@@ -45,7 +45,7 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
 
        
         public double Margen { get; set; }
- 
+        public bool IsReadOnly { get => txtNum.IsReadOnly; set => txtNum.IsReadOnly = value; }
 
         private void cmdUp_Click(object sender, RoutedEventArgs e)
         {
@@ -66,9 +66,6 @@ namespace Gabriel.Cat.S.Wpf.FromInternet.Controls
                 correcto = double.TryParse(txtNum.Text, out newValue);
                 if (correcto)
                     NumValue = newValue;
-                else NumValue = 0;
-
-              
 
             }
         }
