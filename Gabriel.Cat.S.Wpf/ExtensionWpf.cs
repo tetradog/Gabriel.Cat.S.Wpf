@@ -146,17 +146,19 @@ namespace Gabriel.Cat.S.Extension
         }
         public static Bitmap ToBitmap(this System.Windows.Media.Color color,int width,int height)
         {
+            int pos=0;
             Bitmap bmp = new Bitmap(width,height);
-            int pos;
+            
             bmp.TrataBytes((matrizBytes) =>
             {
-                for (int y = 0, xFinal = width * 4; y < height; y++)
-                    for (int x = 0; x < xFinal; x += 4) {
-                        pos = y * xFinal + x;//bgra esta permutado...
-                        matrizBytes[pos+2] = color.R;
-                        matrizBytes[pos + 1] = color.G;
-                        matrizBytes[pos] = color.B;
-                        matrizBytes[pos+3] = 255;
+                for (int y = 0, xFinal = width * Pixel.ARGB; y < height; y++)
+                    for (int x = 0; x < xFinal; x += Pixel.ARGB) {
+                        
+                        matrizBytes[pos+Pixel.R] = color.R;
+                        matrizBytes[pos + Pixel.G] = color.G;
+                        matrizBytes[pos+Pixel.B] = color.B;
+                        matrizBytes[pos+Pixel.A] = byte.MaxValue;
+                        pos += Pixel.ARGB;
                     }
             });
             return bmp;
@@ -167,11 +169,11 @@ namespace Gabriel.Cat.S.Extension
         }
         public static System.Windows.Media.Color Invertir(this System.Windows.Media.Color color)
         {
-            return System.Windows.Media.Color.FromArgb((byte)Math.Abs((int)color.A - 255), (byte)System.Math.Abs((int)color.R - 255), (byte)System.Math.Abs((int)color.G - 255), (byte)System.Math.Abs((int)color.B - 255));
+            return System.Windows.Media.Color.FromArgb((byte)Math.Abs((int)color.A - byte.MaxValue), (byte)System.Math.Abs((int)color.R - byte.MaxValue), (byte)System.Math.Abs((int)color.G - byte.MaxValue), (byte)System.Math.Abs((int)color.B - byte.MaxValue));
         }
         public static bool EsClaro(this System.Windows.Media.Color color)
         {
-            return (color.R + color.G + color.B) / 3 > 255 / 2;
+            return (color.R + color.G + color.B) / 3 > byte.MaxValue / 2;
         }
 
         public static double HeightItem(this StackPanel stkPanel, UIElement item)
@@ -310,7 +312,7 @@ namespace Gabriel.Cat.S.Extension
             TextRange txtRange = rtBox.SelectedText();
             txtRange.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
             txtRange.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Normal);
-            txtRange.ApplyPropertyValue(Inline.TextDecorationsProperty, null);
+            txtRange.ApplyPropertyValue(Inline.TextDecorationsProperty, default);
             rtBox.SelectionMarcador(Colors.Transparent);
 
         }
@@ -412,7 +414,7 @@ namespace Gabriel.Cat.S.Extension
         }
         public static string ToStringRtf(this RichTextBox rt)
         {
-            string textRtf = null;
+            string textRtf;
             TextRange range = new TextRange(rt.Document.ContentStart, rt.Document.ContentEnd);
             MemoryStream stream = new MemoryStream();
             StreamReader reader;

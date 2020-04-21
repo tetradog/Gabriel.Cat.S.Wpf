@@ -22,13 +22,12 @@ namespace Gabriel.Cat.Wpf
     /// </summary>
     public partial class ToggleButton : UserControl
     {
-        Llista<Image> lstBmps;
         int indice;
         public event EventHandler<ToggleButtonArgs> ChangeIndex;
         public ToggleButton()
         {
-            lstBmps = new Llista<Image>();
-            lstBmps.Updated +=(s,e)=>{
+            ImagenesButton = new Llista<Image>();
+            ImagenesButton.Updated +=(s,e)=>{
                 int index = Index;
                 Index = index;
             };
@@ -42,23 +41,20 @@ namespace Gabriel.Cat.Wpf
                     ImagenesButton.Add(bmps[i].ToImage());
             Index = 0;
         }
-        public Llista<Image> ImagenesButton
-        {
-            get { return lstBmps; }
-        }
+        public Llista<Image> ImagenesButton  { get; private set; }
         public int Index
         {
             get { return indice; }
             set
             {
-                if (lstBmps.Count != 0)
+                if (ImagenesButton.Count != 0)
                 {
-                    indice = value % lstBmps.Count;
-                    imgButton.Source = lstBmps[indice].Source;
+                    indice = value % ImagenesButton.Count;
+                    imgButton.Source = ImagenesButton[indice].Source;
                 }
                 else {
                     imgButton.Source = new Image().Source;
-                    indice = 0;
+                    indice = -1;
                 }
             }
         }
@@ -66,8 +62,7 @@ namespace Gabriel.Cat.Wpf
         private void imgButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Index++;
-            if (ChangeIndex != null)
-                ChangeIndex(this, new ToggleButtonArgs(Index));
+            ChangeIndex?.Invoke(this, new ToggleButtonArgs(Index));
         }
     }
     public class ToggleButtonArgs:EventArgs

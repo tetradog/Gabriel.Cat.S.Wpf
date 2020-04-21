@@ -37,7 +37,7 @@ namespace Gabriel.Cat.Wpf
             {
                 estaOn = value;
                 if (estaOn)
-                {//se tiene que 
+                {//se tiene que apagar
 
                         txtLabel.Background = brushOff;
                     
@@ -84,11 +84,10 @@ namespace Gabriel.Cat.Wpf
             }
         }
 
-        private void MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void MouseLeftButtonUp_Click(object sender, MouseButtonEventArgs e)
         {
             EstaOn = !EstaOn;
-            if (Changed != null)
-                Changed(this, new EventArgs());
+            Changed?.Invoke(this, new EventArgs());
         }
 
 

@@ -5,10 +5,10 @@ Creado por tttony 2010
 http://tttony.blogspot.com/
 
 */
-namespace Gabriel.Cat
+namespace Gabriel.Cat.S.Extension
 {
 
-    public static class Aplicacion
+    public static class WindowExtension
     {
         //por probar
         //public static bool EstaEnElInicio
@@ -49,11 +49,11 @@ namespace Gabriel.Cat
         //        hklm.Close();
         //    }
         //}
-        public static bool GetEstaEnPantallaCompleta(System.Windows.Window windows)
+        public static bool GetEstaEnPantallaCompleta(this System.Windows.Window windows)
         {    
            return windows.WindowStyle == System.Windows.WindowStyle.None&& windows.WindowState == System.Windows.WindowState.Maximized; 
         }
-        public static void SetEstaEnPantallaCompleta(System.Windows.Window windows,bool setPantallaCompleta=true)
+        public static void SetEstaEnPantallaCompleta(this System.Windows.Window windows,bool setPantallaCompleta=true)
         {
             if (setPantallaCompleta)
             {

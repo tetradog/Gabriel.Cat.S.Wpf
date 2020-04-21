@@ -7,9 +7,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Calendario.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="ColorListBox.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -20,9 +17,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ItemsListAdmin.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="LowList.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MenuItems.xaml">

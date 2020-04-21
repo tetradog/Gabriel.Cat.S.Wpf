@@ -39,7 +39,8 @@ namespace Gabriel.Cat.Wpf
             set
             {
                 obj = value;
-                txBlToStringObj.Text = obj.ToString();
+                if(obj!=default)
+                   txBlToStringObj.Text = obj.ToString();
             }
         }
         public void CambiarColorLetra(System.Windows.Media.Color color)
@@ -52,12 +53,11 @@ namespace Gabriel.Cat.Wpf
         }
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (ObjSelected != null)
-                ObjSelected(this);
+            ObjSelected?.Invoke(this);
         }
         public override string ToString()
         {
-            return txBlToStringObj!=null?txBlToStringObj.Text:null;
+            return txBlToStringObj?.Text;
         }
     }
 }

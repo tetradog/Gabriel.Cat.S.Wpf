@@ -10,7 +10,6 @@ namespace Gabriel.Cat.Wpf
     /// </summary>
     public partial class SwitchImg : System.Windows.Controls.Image
     {
-        bool cambiarHaciendoClick;
         bool estadoOn;
         ImageSource imgOn, imgOff;
 
@@ -20,15 +19,15 @@ namespace Gabriel.Cat.Wpf
         {
             estadoOn = false;
             InitializeComponent();
-            cambiarHaciendoClick = true;
+            CambiarHaciendoClick = true;
         }
 
         public SwitchImg(Bitmap imgOn, Bitmap imgOff,bool estaOn=false):this()
         {
             this.imgOn = imgOn.ToImage().Source;
-            this.SetImage(imgOff);
-            this.imgOff = Source;
-            this.EstadoOn = estadoOn;
+            this.imgOff = imgOff.ToImage().Source;
+            
+            EstadoOn = estaOn;
         }
         public bool EstadoOn
         {
@@ -58,7 +57,7 @@ namespace Gabriel.Cat.Wpf
             set
             {
                 imgOn = value;
-                if (estadoOn)
+                if (EstadoOn)
                     Source = imgOn;
             }
         }
@@ -73,40 +72,26 @@ namespace Gabriel.Cat.Wpf
             set
             {
                 imgOff = value;
-                if (!estadoOn)
+                if (!EstadoOn)
                     Source = imgOff;
             }
         }
 
-        public bool CambiarHaciendoClick
-        {
-            get
-            {
-                return cambiarHaciendoClick;
-            }
-
-            set
-            {
-                cambiarHaciendoClick = value;
-            }
-        }
+        public bool CambiarHaciendoClick { get; set; }
 
         private void Image_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (cambiarHaciendoClick)
+            if (CambiarHaciendoClick)
             {
-                estadoOn = !estadoOn;
-                PonImagen();
-
-                if (SwitchChanged != null)
-                    SwitchChanged(this, estadoOn);
+                EstadoOn = !EstadoOn;
+                SwitchChanged?.Invoke(this, EstadoOn);
             }
 
         }
 
         private void PonImagen()
         {  
-            if (estadoOn)
+            if (EstadoOn)
                 Source = imgOn;
             else
                 Source = imgOff;
