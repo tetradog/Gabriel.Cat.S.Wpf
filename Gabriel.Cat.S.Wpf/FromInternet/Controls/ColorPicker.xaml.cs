@@ -9,6 +9,7 @@ using Gabriel.Cat.S.Extension;
 using Gabriel.Cat;
 using Gabriel.Cat.Wpf;
 using Gabriel.Cat.S.Utilitats;
+using Gabriel.Cat.S.Wpf;
 //sacado de http://www.codeproject.com/Articles/33001/WPF-A-Simple-Color-Picker-With-Preview
 namespace WPFColorPickerLib
 {
@@ -60,13 +61,13 @@ namespace WPFColorPickerLib
             drawingAttributes = new DrawingAttributes();
             InitializeComponent();
             isMouseDown = false;
-            this.ColorImage.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
-            this.ImgCircle1.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchCircle);
+            this.ColorImage.SetImage(Resource1.ColorSwatchSquare1);
+            this.ImgCircle1.SetImage(Resource1.ColorSwatchCircle);
             this.ImgCircle1.Tag = new ImagePointerLocated(this.ImgCircle1);
-            this.ImgSqaure1.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
+            this.ImgSqaure1.SetImage(Resource1.ColorSwatchSquare1);
             imagenActual = new ImagePointerLocated(this.ImgSqaure1);
             this.ImgSqaure1.Tag = imagenActual;
-            this.ImgSqaure2.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare2);
+            this.ImgSqaure2.SetImage(Resource1.ColorSwatchSquare2);
             this.ImgSqaure2.Tag = new ImagePointerLocated(this.ImgSqaure2);
 
             this.SelectedColor = initialColor;

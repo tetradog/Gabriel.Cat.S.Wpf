@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using Gabriel.Cat.S.Extension;
 using System.Windows.Controls;
+using Gabriel.Cat.S.Wpf;
 //sacado de http://www.codeproject.com/Articles/33001/WPF-A-Simple-Color-Picker-With-Preview
 namespace WPFColorPickerLib
 {
@@ -34,7 +35,7 @@ namespace WPFColorPickerLib
 		{
 			Image imgIco = new Image();
 			InitializeComponent();
-			imgIco.SetImage(Gabriel.Cat.Wpf.Resource1.ColorSwatchSquare1);
+			imgIco.SetImage(Resource1.ColorSwatchSquare1);
 			Icon = imgIco.Source;
 			colorPicker.SelectedColor = initialColor;
 		}

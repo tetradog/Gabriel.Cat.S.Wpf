@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Gabriel.Cat.S.Extension;
 using System.Xml;
 using Gabriel.Cat.S.Utilitats;
+using Gabriel.Cat.S.Wpf;
 
 namespace Gabriel.Cat.Wpf
 {
