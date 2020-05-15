@@ -38,6 +38,7 @@ namespace Gabriel.Cat.S.Extension
 
     public static class ExtensionWpf
     {
+
         public static System.Drawing.Point GetPoint(this Visual visual, MouseEventArgs e)
         {
             return GetPoint(visual, e.GetPosition(e.MouseDevice.DirectlyOver));
