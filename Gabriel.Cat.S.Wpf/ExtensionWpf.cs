@@ -38,7 +38,27 @@ namespace Gabriel.Cat.S.Extension
 
     public static class ExtensionWpf
     {
-
+        public static string GetFilePath(this IDataObject dataObj, int file = 0)
+        {
+            string path;
+            if (dataObj.GetDataPresent(DataFormats.FileDrop))
+            {
+                path = ((string[])dataObj.GetData(DataFormats.FileDrop))[file];
+            }
+            else path = default;
+            return path;
+        }
+        public static byte[] GetFileData(this IDataObject dataObj,int file = 0)
+        {
+            byte[] data;
+            string path = dataObj.GetFilePath(file);
+            if (path != default)
+            {
+                data = System.IO.File.ReadAllBytes(path);
+            }
+            else data = default;
+            return data;
+        }
         public static System.Drawing.Point GetPoint(this Visual visual, MouseEventArgs e)
         {
             return GetPoint(visual, e.GetPosition(e.MouseDevice.DirectlyOver));
