@@ -10,7 +10,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>Gabriel.Cat.Developer</Copyright>
-    <Version>1.0.1-preview1.1.2</Version>
+    <Version>1.0.1-preview1.1.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Gabriel.Cat.S.Utilitats" Version="1.2.4" />
+    <PackageReference Include="Gabriel.Cat.S.Utilitats" Version="1.2.6" />
   </ItemGroup>
 
   <ItemGroup>
